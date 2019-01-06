@@ -1,0 +1,56 @@
+<div id="container">
+  <mat-card id="header">
+        <mat-card-title>Medewerkers</mat-card-title> 
+      <mat-card-subtitle>Alle medewerkers</mat-card-subtitle>
+    
+  </mat-card>
+
+  <mat-card class="medewerkers">
+    <mat-card-subtitle>
+        <button mat-mini-fab color="primary">
+            <i class="material-icons">
+                face
+                </i>
+          </button>
+      Medewerkers 
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br>
+    <mat-list>
+        <mat-spinner *ngIf='!medewerkers'></mat-spinner>
+        <mat-list-item *ngFor='let medewerker of medewerkers'>
+            <button [disabled]="!medewerker.medewerkerId"  (click)='deleteMedewerker(medewerker)' mat-icon-button>
+                <i class="material-icons">delete</i>
+              </button>
+         <h4  mat-line><a routerLink="/medewerkers/{{medewerker.medewerkerId}}"> {{medewerker.voornaam}} {{medewerker.achternaam}}</a></h4>
+          <p mat-line> {{medewerker.telefoonnummer}} | {{medewerker.email}} </p>
+        </mat-list-item>
+      </mat-list>
+
+    </mat-card>
+    <mat-card class="addMedewerker"> 
+      <mat-card-subtitle>
+          <button mat-mini-fab color="primary">
+              <i class="material-icons">
+                  add
+                  </i>
+            </button>
+        Nieuwe medewerker
+      </mat-card-subtitle>
+      <mat-divider></mat-divider> <br>
+          <mat-form-field>
+      
+          <input [(ngModel)]="newMedewerker.voornaam"  matInput placeholder="Voornaam">
+        </mat-form-field>
+        <mat-form-field>
+            <input [(ngModel)]="newMedewerker.achternaam"  matInput placeholder="Achternaam">
+          </mat-form-field>
+          <mat-form-field>
+              <input [(ngModel)]="newMedewerker.telefoonnummer"  matInput placeholder="Telefoonnummer">
+            </mat-form-field> 
+            <mat-form-field>
+                <input [(ngModel)]="newMedewerker.email"  matInput placeholder="Email">
+              </mat-form-field> 
+            <button  (click)='addMedewerker()' mat-raised-button color="primary"> Toevoegen</button>
+</mat-card>
+
+  </div>

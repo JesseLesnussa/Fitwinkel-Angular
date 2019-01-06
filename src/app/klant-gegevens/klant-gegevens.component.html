@@ -1,0 +1,68 @@
+
+<div id="container">
+  <mat-card id="header">
+        <mat-card-title>Relaties</mat-card-title> 
+      <mat-card-subtitle>Overzicht van alle relaties/klanten</mat-card-subtitle>
+      
+  </mat-card>
+ 
+  
+  <mat-card class="klanten">
+    <mat-card-subtitle>
+        <button mat-mini-fab color="primary">
+            <i class="material-icons">
+              person
+                </i>
+          </button>
+      Relaties 
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br>
+    <mat-spinner *ngIf='!klanten$'></mat-spinner>
+    <mat-list>
+        <mat-list-item *ngFor='let klant of klanten$'>
+            <button [disabled]="!klant.id"  (click)='deleteKlant(klant)' mat-icon-button>
+                <i class="material-icons">delete</i>
+              </button>
+          <h4 mat-line> {{klant.voornaam}} {{klant.achternaam}}   </h4>
+          <p mat-line>{{klant.adres}}, {{klant.woonplaats}} - {{klant.postcode}}</p>
+          <p mat-line>{{klant.telefoonnummer}} - {{klant.mobielnummer}} - <a href="mailto:{{klant.email}}">{{klant.email}}</a>  </p>
+        </mat-list-item>
+      </mat-list>
+  </mat-card>
+
+      <mat-card class="addKlant"> 
+        <mat-card-subtitle>
+            <button mat-mini-fab color="primary">
+                <i class="material-icons">
+                    add
+                    </i>
+              </button>
+          Nieuwe Relaties
+        </mat-card-subtitle>
+        <mat-divider></mat-divider> <br>
+        <mat-form-field>
+            <input [(ngModel)]="newKlant.voornaam"  matInput placeholder="Voornaam">
+          </mat-form-field>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.achternaam"  matInput placeholder="Achternaam">
+          </mat-form-field> <br>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.adres"  matInput placeholder="Adres">
+          </mat-form-field> 
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.woonplaats"  matInput placeholder="Woonplaats">
+          </mat-form-field>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.postcode"  matInput placeholder="Postcode">
+          </mat-form-field> <br>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.telefoonnummer"  matInput placeholder="Telefoonnummer">
+          </mat-form-field>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.mobielnummer"  matInput placeholder="Mobielnummer">
+          </mat-form-field>
+          <mat-form-field>
+            <input [(ngModel)]="newKlant.email"  matInput placeholder="Email">
+          </mat-form-field> <br>
+                     <button (click)="addKlant()" mat-raised-button color="primary"> Toevoegen</button>
+    </mat-card>

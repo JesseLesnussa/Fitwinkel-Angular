@@ -1,0 +1,86 @@
+
+  
+  <table id="table">
+    <tr>
+      <td>Bonnummer Fitwinkel</td>
+      <td>{{klacht.klachtennummer}}</td>
+    </tr>
+    <tr>
+      <td colspan=2>1. Klantgegevens</td>
+    </tr>
+    <tr>
+      <td>Voornaam</td>
+      <td>{{klant.voornaam}}</td>
+    </tr>
+    <tr>
+        <td>Achternaam</td>
+        <td>{{klant.achternaam}}</td>
+      </tr>
+      <tr>
+          <td>Adres</td>
+          <td>{{klant.adres}}</td>
+     </tr>
+     <tr>
+      <td>Postcode</td>
+      <td>{{klant.postcode}}</td>
+    </tr>
+    <tr>
+      <td>Woonplaats</td>
+      <td>{{klant.woonplaats}}</td>
+    </tr>
+    <tr>
+      <td>Telefoonnummer</td>
+      <td>{{klant.telefoonnummer}}</td>
+    </tr>
+    <tr>
+      <td>Mobiel nummer</td>
+      <td>{{klant.mobielnummer}}</td>
+    </tr>
+    <tr>
+      <td>E-mail adres</td>
+      <td>{{klant.email}}</td>
+    </tr>
+    <tr><td colspan=2> </td></tr>
+    <tr>
+      <td colspan=2>2. Product & bestelgegevens</td>
+    </tr>
+    <tr>
+      <td>Merk</td>
+      <td>{{merk.merknaam}}</td>
+    </tr>
+    <tr>
+      <td>Naam product</td>
+      <td>{{klacht.productNaam}}</td>
+    </tr>
+    <tr>
+      <td>Product nummer (bijvoorbeeld PFEVEL95910)</td>
+      <td>{{klacht.productNummer}}</td>
+    </tr>      <tr>
+      <td>Serienummer (bijvoorbeeld  N° Serie S24G03848)</td>
+      <td>{{klacht.serienummer}}</td>
+    </tr>
+    <tr>
+      <td>Bij defect onderdeel: onderdeelnaam en nummer (staat in de producthandleiding)</td>
+      <td>{{klacht.defectonderdeel}}</td>
+    </tr>
+    <tr>
+      <td>Ordernummer</td>
+      <td>{{klacht.ordernummer}}</td>
+    </tr>
+    <tr>
+      <td>Besteldatum</td>
+      <td>{{klacht.aankoopdatum}}</td>
+    </tr>
+    <tr><td colspan=2> </td></tr>
+    <tr>
+      <td colspan=2>3. Omschrijving van het defect</td>
+    </tr>
+    <tr>
+      <td class="omschrijving" colspan=2> {{klacht.klachtenomschrijving}} </td>
+    </tr>
+</table>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="sluiten()">Terug</button>
+    <button mat-button (click)="emailKlant(klacht)"  cdkFocusInitial>Stel een mail op</button>
+  </div>

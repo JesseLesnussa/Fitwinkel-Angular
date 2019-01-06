@@ -1,0 +1,18 @@
+import {MatButtonModule, MatCheckboxModule, MatListModule, MatDialogModule, MatAutocompleteModule,
+    MatFormFieldModule, MatInputModule, MatSelectModule, MatRippleModule, MatRadioModule, MatTooltipModule,
+    MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatExpansionModule,MatMenuModule,MatIconModule,
+    MatCardModule, MatGridListModule, MatDividerModule, MatChipsModule, MatToolbarModule, MatProgressSpinnerModule} from '@angular/material';
+import { NgModule } from '@angular/core';
+
+
+@NgModule({
+    imports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatListModule, MatDialogModule,MatRippleModule, MatRadioModule, MatTooltipModule,
+        MatInputModule, MatSelectModule, MatSnackBarModule, MatDatepickerModule, MatExpansionModule, MatAutocompleteModule,MatMenuModule, MatIconModule,
+        MatNativeDateModule, MatCardModule, MatGridListModule, MatDividerModule, MatChipsModule, MatToolbarModule, MatInputModule,MatProgressSpinnerModule],
+    exports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatListModule, MatDialogModule,MatRippleModule, MatRadioModule,MatTooltipModule,
+        MatInputModule, MatSelectModule, MatSnackBarModule, MatDatepickerModule, MatExpansionModule, MatAutocompleteModule,MatMenuModule, MatIconModule,
+        MatNativeDateModule, MatCardModule, MatGridListModule, MatDividerModule, MatChipsModule, MatToolbarModule, MatInputModule,MatProgressSpinnerModule],
+    providers: [MatDatepickerModule ]
+})
+
+export class MaterialModule {}

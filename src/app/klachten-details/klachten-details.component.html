@@ -1,0 +1,194 @@
+<div class="container">
+<mat-card id="header">
+    <mat-card-title>
+        Details klacht
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="klacht$">
+      Informatie over klacht {{klacht$.klachtennummer}}
+    </mat-card-subtitle>
+  </mat-card>
+
+  <mat-spinner *ngIf='!klacht$; else klacht'></mat-spinner>
+<mat-card id="klacht" *ngIf="klacht$">
+    <mat-card-header>
+      <mat-card-subtitle>
+          <button mat-mini-fab color="warn">
+              <i class="material-icons">
+                  insert_drive_file
+                  </i>
+            </button>
+        Klacht</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+   
+    <mat-card-content >
+        <br>
+          <mat-form-field>
+            
+            <input disabled matInput value="{{klacht$.klachtennummer}}" placeholder="Klachtennummer">
+            </mat-form-field>      
+           <br>
+           <mat-form-field>
+              <input disabled [(ngModel)]="klacht$.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
+            </mat-form-field>
+            <br>
+           <mat-form-field *ngIf="merk$">
+              <input disabled [(ngModel)]="merk$.merknaam" matInput placeholder="Merk">
+            </mat-form-field>     
+            <br> 
+            <button (click)="emailLeverancier(klacht$,klant$,merk$)" mat-raised-button color="warn">
+                <i class="material-icons">
+                    assignment
+                </i>
+              Genereer een formulier</button>
+              <a target="_blank" href='https://www.flowsportsgroup.com/customer/account/login/'>
+              <button  *ngIf='klacht$.merknaam == "Flow Fitness" ' mat-raised-button color="warn">
+                  <i class="material-icons">
+                      send
+                  </i>
+                Website van Flow Fitness</button>
+              </a>
+             <br> 
+            <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.datumbegin" matInput placeholder="Meldingsdatum">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.productNaam" matInput placeholder="Naam product">
+              </mat-form-field>   
+              <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.productNummer" matInput placeholder="Productnummer">
+              </mat-form-field>   
+              <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.serienummer" matInput placeholder="Serienummer">
+              </mat-form-field>  
+              <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.defectonderdeel" matInput placeholder="Defect Onderdeel">
+              </mat-form-field>  
+              <br>
+              <mat-form-field>
+                <input disabled [(ngModel)]="klacht$.ordernummer" matInput placeholder="Ordernummer">
+              </mat-form-field>  
+              <br> 
+  
+              <br> 
+              <span *ngIf="klacht$.s==1;else isOpgelost"> 
+                  
+                <button (click)='changeOpgelost(klacht$)' mat-raised-button color="warn">
+                  Open
+                      <i class="material-icons">
+                          autorenew
+                      </i>    
+                    </button>      
+          
+                </span>    
+              <ng-template #isOpgelost> 
+                  <button (click)='changeOpgelost(klacht$)' mat-raised-button color="primary">
+                    Opgelost 
+                      <i class="material-icons">
+                          autorenew
+                      </i>    
+                    </button>    
+              </ng-template> <br>
+    </mat-card-content>
+  </mat-card>
+
+<mat-card id="klant" *ngIf="klant$">
+  <mat-card-header>
+    <mat-card-subtitle>
+        <button mat-mini-fab>
+            <i class="material-icons">
+                person
+                </i>
+          </button>
+      Klant</mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content  >
+      <br>
+          <mat-form-field>
+              <input disabled [(ngModel)]="klant$.voornaam" matInput placeholder="Klantnaam">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.achternaam" matInput placeholder="Klantadres">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.adres" matInput placeholder="Klantpostcode">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.postcode" matInput placeholder="Woonplaats">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.woonplaats" matInput placeholder="Telefoonnummer">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.telefoonnummer" matInput placeholder="Mobiel">
+            </mat-form-field>      
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.mobielnummer" matInput placeholder="Email">
+            </mat-form-field>   
+            <br>
+            <mat-form-field>
+              <input disabled [(ngModel)]="klant$.email" matInput placeholder="Email">
+            </mat-form-field>  <br>
+            <button *ngIf="klant$.email" mat-raised-button color="accent" (click)="emailKlant(klacht$, klant$)">
+                <i class="material-icons">
+                    email
+                </i>
+              Stuur e-mail naar {{klant$.voornaam}} {{klant$.achternaam}}</button>
+  </mat-card-content>
+</mat-card>
+<mat-card class="acties">
+    <mat-card-subtitle>
+        <button mat-mini-fab color="primary">
+            <i class="material-icons">
+                speaker_notes
+                </i>
+          </button>
+      Acties
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br>
+    <mat-list>
+        <mat-list-item *ngFor="let actie of acties$">
+            <button  (click)='deleteActie(actie)' mat-icon-button>
+                <i class="material-icons">delete</i>
+              </button>
+          <h4 mat-line>{{actie.klantnaam}}</h4>
+          <p mat-line> {{actie.actie}}</p>
+          <p mat-line> {{actie.datum | date}} </p>
+        </mat-list-item>
+      </mat-list>
+
+    </mat-card >
+    <mat-card class="acties"> 
+      <mat-card-subtitle>
+          <button mat-mini-fab color="primary">
+              <i class="material-icons">
+                  add
+                  </i>
+            </button>
+        Nieuwe actie
+      </mat-card-subtitle>
+      <mat-divider></mat-divider> <br>
+      <mat-form-field *ngIf="medewerkers">
+          <mat-select [(ngModel)]="actie.klantnaam"    placeholder="Medewerker" required>
+              <mat-option *ngFor='let mw of medewerkers' [value]="mw.voornaam + ' ' + mw.achternaam"> {{mw.voornaam}} {{mw.achternaam}} </mat-option>
+            </mat-select>
+        
+        </mat-form-field>
+          <mat-form-field>
+              <input [(ngModel)]="actie.actie"  matInput placeholder="Omschrijving">
+            </mat-form-field> 
+            <button (click)="addActie()" mat-raised-button color="primary"> Toevoegen</button>
+</mat-card>
+</div>

@@ -1,0 +1,126 @@
+<div id="container">
+<mat-card id="header">
+      <mat-card-title>Klacht toevoegen</mat-card-title>
+    
+
+    <mat-card-subtitle>Vul alle verplichte velden in* </mat-card-subtitle>
+</mat-card>
+
+<mat-card id="klacht">
+  <mat-card-header>
+      <mat-card-subtitle>
+          <button mat-mini-fab color="warn">
+              <i class="material-icons">
+                  insert_drive_file
+                  </i>
+            </button>
+        Klacht</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+    <br>
+
+      <mat-form-field color="warn">
+         <mat-select  [(ngModel)]="klacht.MerkType"    placeholder="Merk">
+          <mat-option *ngFor='let merk of merken'  [value]="merk"> {{merk.merknaam}} </mat-option>
+        </mat-select>        
+      </mat-form-field> 
+      <br>
+      <mat-form-field color="warn">
+        <input [(ngModel)]="klacht.productNaam" matInput placeholder="Naam product">
+      </mat-form-field>
+      <br>
+      <mat-form-field color="warn">
+          <input [(ngModel)]="klacht.productNummer" matInput placeholder="Productnummer">
+        </mat-form-field>
+      <br>
+      <div *ngIf="klacht.MerkType.serienummerVerplicht ==  1">
+        <mat-form-field color="warn" >
+          <input [(ngModel)]="klacht.serienummer" matInput placeholder="Serienummer">
+        </mat-form-field>
+      </div>
+    
+      <mat-form-field color="warn">
+        <input [(ngModel)]="klacht.defectOnderdeel" matInput placeholder="Defect onderdeel">
+      </mat-form-field>
+      <br>
+      <mat-form-field color="warn">
+          <input [(ngModel)]="klacht.ordernummer" matInput placeholder="Ordernummer">
+        </mat-form-field>
+        <br>
+      <mat-form-field color="warn">
+          <input maxlength="200" [(ngModel)]="klacht.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
+          <mat-hint >{{klacht.klachtenomschrijving.length}} / 200</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field color="warn">
+            <input [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum" >
+            <mat-datepicker-toggle matSuffix [for]="Aankoopdatum"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #Aankoopdatum color="warn"></mat-datepicker>
+          </mat-form-field>
+          <br>
+          <!--
+          <mat-form-field color="warn"> 
+            <input [(ngModel)]="klacht.datumbegin" matInput [matDatepicker]="DatumBegin" placeholder="Meldingsdatum">
+            <mat-datepicker-toggle matSuffix [for]="DatumBegin" color="warn"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #DatumBegin color="warn"></mat-datepicker>
+          </mat-form-field>
+          <br> -->    
+          <mat-form-field color="warn">
+            <mat-select  [(ngModel)]="klacht.medewerkerId"    placeholder="Medewerker" required>
+              <mat-option *ngFor='let mw of medewerkers' [value]="mw.medewerkerId"> {{mw.voornaam}} {{mw.achternaam}} </mat-option>
+            </mat-select>
+          
+          </mat-form-field>
+</mat-card>
+
+<mat-card id="klant">
+    <mat-card-header>
+        <mat-card-subtitle>
+            <button mat-mini-fab>
+                <i class="material-icons">
+                    person
+                    </i>
+              </button>
+          Klant</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <br>
+        <mat-form-field color="accent">
+          <mat-select   [(ngModel)]="klacht.klant"    placeholder="Klant" required>
+            <mat-option   *ngFor='let klant of klanten$' [value]="klant"> {{klant.voornaam}} {{klant.achternaam}} </mat-option>
+          </mat-select>
+          
+        </mat-form-field>
+        <br>
+      <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.adres" matInput placeholder="Adres">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.woonplaats" matInput placeholder="Woonplaats">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.postcode" matInput placeholder="Postcode">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.telefoonnummer" matInput placeholder="Telefoonnummer">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.mobielnummer" matInput placeholder="Mobielnummer">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input disabled [(ngModel)]="klacht.klant.email" matInput placeholder="Email">
+        </mat-form-field>      
+        <br>
+        <mat-card-actions>
+          <button (click)="addKlacht()" mat-raised-button color="primary"> Toevoegen</button>
+        </mat-card-actions>
+</mat-card>
+
+
+</div>

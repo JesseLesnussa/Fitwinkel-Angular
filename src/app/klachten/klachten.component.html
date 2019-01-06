@@ -1,0 +1,57 @@
+<div id='container'>
+
+    <mat-card id='header'>
+      <mat-card-title>
+          Klachten
+      </mat-card-title>
+      <mat-card-subtitle>
+        Overzicht van opgeloste en openstaande klachten 
+      </mat-card-subtitle>
+      
+          <mat-form-field>
+            <input [(ngModel)]="filter" (input)="filterKlachten($event)" type="text" placeholder="Filter op merk" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete  (optionSelected)="filterKlachten($event)" autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option  *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field> 
+            <mat-select placeholder="Status"  [(ngModel)]="status" (ngModelChange)="filterKlachten($event)">
+              <mat-option [value]=null >
+                --
+              </mat-option>
+              <mat-option [value]="1">
+                Open
+              </mat-option>
+              <mat-option [value]="0">
+                Opgelost
+              </mat-option>
+            </mat-select>
+            <br>
+          </mat-form-field>
+
+          <mat-divider></mat-divider> <br><br>
+          <mat-nav-list >
+              <mat-spinner *ngIf='!klachten$'></mat-spinner>
+              <a  matTooltip="Bekijk klacht" matTooltipPosition="left"
+                  mat-list-item *ngFor='let klacht of klachten$' routerLink="details/{{klacht.klachtennummer}}">
+                  <mat-icon  *ngIf='klacht.s; else close' color="warn" mat-list-icon>close</mat-icon>
+                  <ng-template #close> 
+                      <mat-icon color="primary" mat-list-icon>check</mat-icon> 
+                  </ng-template>
+                <h4 mat-line> {{klacht.klachtennummer}}  </h4>
+                <p mat-line>
+                  {{klacht.merknaam}} | {{klacht.klachtenomschrijving}}<br>{{klacht.datumbegin | date}} 
+                </p>
+                    <button  (click)='changeOpgelost($event, klacht)' mat-icon-button>
+                        <mat-icon matTooltip="Wijzig status" matTooltipPosition="above" mat-list-icon>autorenew</mat-icon> 
+                      </button>
+                <button  (click)='deleteKlacht($event, klacht)' mat-icon-button>
+                    <mat-icon matTooltip="Verwijder klacht {{klacht.klachtnummer}}" matTooltipPosition="above" mat-list-icon>delete</mat-icon> 
+                  </button>
+              </a>
+            </mat-nav-list>
+
+    </mat-card>
+  </div>

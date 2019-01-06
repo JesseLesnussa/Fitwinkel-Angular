@@ -1,0 +1,61 @@
+<div id="container">
+  <mat-card id="header">
+        <mat-card-title>Merken</mat-card-title> 
+      <mat-card-subtitle>Alle merken</mat-card-subtitle>
+      
+  </mat-card>
+ 
+  
+  <mat-card class="merken">
+    <mat-card-subtitle>
+        <button mat-mini-fab color="primary">
+            <i class="material-icons">
+                business
+                </i>
+          </button>
+      Merken 
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br>
+    <mat-list>
+        <mat-spinner *ngIf='!merken$'></mat-spinner>
+        <mat-list-item *ngFor='let merk of merken$'>
+            <button [disabled]="!merk.id"  (click)='deleteMerk(merk)' mat-icon-button>
+                <i class="material-icons">delete</i>
+              </button>
+          <h4 mat-line> {{merk.merknaam}}   </h4>
+          <p mat-line>{{merk.email}}</p>
+          <p mat-line *ngIf="merk.serienummerVerplicht == 1"> Serienummer is verplicht </p>
+        </mat-list-item>
+      </mat-list>
+  
+    </mat-card>
+
+  <mat-card class="addMerk"> 
+    <mat-card-subtitle>
+        <button mat-mini-fab color="primary">
+            <i class="material-icons">
+                add
+                </i>
+          </button>
+      Nieuwe merk
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br>
+    <mat-form-field>
+        <input [(ngModel)]="newMerk.merknaam"  matInput placeholder="Merknaam">
+      </mat-form-field>
+      <mat-form-field>
+          <input [(ngModel)]="newMerk.email"  matInput placeholder="Email">
+        </mat-form-field>
+      <mat-radio-group [(ngModel)]="newMerk.serienummerVerplicht" class="example-radio-group">
+        <mat-radio-button  class="example-radio-button" value=true >Serienummer verplicht</mat-radio-button>
+        <mat-radio-button  class="example-radio-button" value=false >Serienummer niet verplicht</mat-radio-button>
+      </mat-radio-group>
+                 <button (click)="addMerk()" mat-raised-button color="primary"> Toevoegen</button>
+</mat-card>
+
+
+
+
+  </div>  
+ 
+

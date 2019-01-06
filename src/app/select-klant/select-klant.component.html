@@ -1,0 +1,12 @@
+<h2>Klachten</h2>
+<ul>
+  <li *ngFor='let klacht of klachten$.records'>
+  
+      <a href="">{{klacht.Klachtennummer}}</a>
+
+     <ul>
+        {{klacht.Klantnaam}}
+     </ul>  
+     <ul>{{klacht.Klachtenomschrijving}}</ul>
+    </li>
+  </ul>

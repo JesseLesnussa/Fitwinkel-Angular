@@ -1,0 +1,24 @@
+<div id='container'>
+
+  <mat-card id='header'>
+    <mat-card-title *ngIf='medewerker'>
+        Klachten van {{medewerker.voornaam}} {{medewerker.achternaam}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      Overzicht van opgeloste en openstaande klachten 
+    </mat-card-subtitle>
+    <mat-divider></mat-divider> <br><br>
+    <mat-nav-list >
+        <mat-spinner *ngIf='!klachten$'></mat-spinner>
+        <a mat-list-item *ngFor='let klacht of klachten$' routerLink="/../details/{{klacht.klachtennummer}}">
+            <mat-icon *ngIf='klacht.s; else close' color="primary" mat-list-icon>check</mat-icon>
+            <ng-template #close> 
+                <mat-icon color="accent" mat-list-icon>close</mat-icon> 
+            </ng-template>
+          <h4 mat-line> {{klacht.klachtennummer}}  </h4>
+          <p mat-line>{{klacht.productNaam}} {{klacht.productNummer}}</p>
+        </a>
+      </mat-nav-list>
+
+  </mat-card>
+

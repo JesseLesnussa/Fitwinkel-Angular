@@ -1,0 +1,36 @@
+<nav>
+  <ul>
+    <li  matTooltip="Overzicht klachten" matTooltipPosition="right">
+      <a routerLink="" [class.activated]="currentUrl == '/'">
+        <i 
+        class="material-icons">format_list_bulleted
+      </i>
+      </a>
+    </li>
+    <li matTooltip="Nieuwe klacht toevoegen" matTooltipPosition="right">
+      <a  routerLink="/toevoegen" [class.activated]="currentUrl == '/toevoegen' ">
+        <i class="material-icons">playlist_add</i>
+      </a>
+    </li>
+    <li matTooltip="Overzicht merken" matTooltipPosition="right">
+      <a  routerLink="/merken" [class.activated]="currentUrl == '/merken'">
+        <i class="material-icons">business</i>
+      </a>
+    </li>   
+    <li matTooltip="Overzicht klanten" matTooltipPosition="right">
+        <a  routerLink="/klanten" [class.activated]="currentUrl == '/klanten'">
+          <i class="material-icons">person</i>
+        </a>
+      </li>
+      <li matTooltip="Overzicht medewerkers" matTooltipPosition="right" >
+        <a  routerLink="/medewerkers" [class.activated]="currentUrl == '/medewerkers'">
+          <i class="material-icons">face</i>
+        </a>
+      </li>
+      <li matTooltip="Rapportage" matTooltipPosition="right" >
+        <a  routerLink="/reporting" [class.activated]="currentUrl == '/reporting'">
+          <i class="material-icons">trending_up</i>
+        </a>
+      </li>
+  </ul>
+</nav>
