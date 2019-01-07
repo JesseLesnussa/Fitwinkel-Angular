@@ -46,9 +46,9 @@
       <mat-form-field>
           <input [(ngModel)]="newMerk.email"  matInput placeholder="Email">
         </mat-form-field>
-      <mat-radio-group [(ngModel)]="newMerk.serienummerVerplicht" class="example-radio-group">
-        <mat-radio-button  class="example-radio-button" value=true >Serienummer verplicht</mat-radio-button>
-        <mat-radio-button  class="example-radio-button" value=false >Serienummer niet verplicht</mat-radio-button>
+      <mat-radio-group required [(ngModel)]="newMerk.serienummerVerplicht" class="example-radio-group">
+        <mat-radio-button  selected class="example-radio-button" value=1 >Serienummer verplicht</mat-radio-button>
+        <mat-radio-button  class="example-radio-button" value=0 >Serienummer niet verplicht</mat-radio-button>
       </mat-radio-group>
                  <button (click)="addMerk()" mat-raised-button color="primary"> Toevoegen</button>
 </mat-card>

@@ -14,7 +14,7 @@ export class MerkenComponent implements OnInit {
   merken$: any;
   newMerk = {
     merknaam: "",
-    serienummerVerplicht: true,
+    serienummerVerplicht: null,
     email: ""
   }
   ngOnInit() {
@@ -24,17 +24,19 @@ export class MerkenComponent implements OnInit {
   }
 
   addMerk(){  
+    
     this.MsSQLService.addMerk(this.newMerk).subscribe(data => {
+      console.log(data);
     this.popup.open("Nieuwe merk is toegevoegd", null, {duration:1500})
       }
     );
-
+    
     console.log("add", this.merken$);
     this.merken$.push(this.newMerk);
     
     this.newMerk = {
       "merknaam": "",
-      "serienummerVerplicht": true,
+      "serienummerVerplicht": null,
       "email":""
     }
   }

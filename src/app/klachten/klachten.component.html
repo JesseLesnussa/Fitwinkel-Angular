@@ -40,9 +40,10 @@
                   <ng-template #close> 
                       <mat-icon color="primary" mat-list-icon>check</mat-icon> 
                   </ng-template>
-                <h4 mat-line> {{klacht.klachtennummer}}  </h4>
+                <h4 mat-line> <b>{{klacht.klachtennummer}}</b>  </h4>
                 <p mat-line>
-                  {{klacht.merknaam}} <span *ngIf='klacht.klachtenomschrijving'>| {{klacht.klachtenomschrijving}}</span> <br>{{klacht.datumbegin | date}} 
+                  {{klacht.merknaam}} <span *ngIf='klacht.klachtenomschrijving'> - {{klacht.klachtenomschrijving}}</span> <br> 
+                  <i>{{klacht.datumbegin | date}} </i> 
                 </p>
                     <button  (click)='changeOpgelost($event, klacht)' mat-icon-button>
                         <mat-icon matTooltip="Wijzig status" matTooltipPosition="above" mat-list-icon>autorenew</mat-icon> 
