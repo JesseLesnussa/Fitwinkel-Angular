@@ -43,14 +43,16 @@ export class MedewerkersComponent implements OnInit {
   }
 
   deleteMedewerker(medewerker){
-    var index = this.medewerkers.map(x => {
-      return x.medewerkerId;
-    }).indexOf(medewerker.medewerkerId);
-      this.MsSQLService.deleteMedewerker(medewerker).subscribe(data => 
-          data =>  console.log(data)
-      );
-      this.popup.open(medewerker.voornaam + " is verwijderd", null, {duration:1500})
-      this.medewerkers.splice(index, 1)
+    if(confirm("Weet je zeker dat je " + medewerker.voornaam + " " + medewerker.achternaam + " wilt verwijderen? Alle gekoppelde klachten zullen ook worden verwijderd!")){
+      var index = this.medewerkers.map(x => {
+        return x.medewerkerId;
+      }).indexOf(medewerker.medewerkerId);
+        this.MsSQLService.deleteMedewerker(medewerker).subscribe(data => 
+            data =>  console.log(data)
+        );
+        this.popup.open(medewerker.voornaam + " is verwijderd", null, {duration:1500})
+        this.medewerkers.splice(index, 1)
+      }
     }
   }
 

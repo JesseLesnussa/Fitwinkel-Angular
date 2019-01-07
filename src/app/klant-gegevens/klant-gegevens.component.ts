@@ -33,14 +33,16 @@ export class KlantGegevensComponent implements OnInit {
   }
 
   deleteKlant(klant){
-    var index = this.klanten$.map(x => {
-      return x.id;
-    }).indexOf(klant.id);
-      this.MsSQLService.deleteKlant(klant).subscribe(data => 
-          data =>  console.log(data)
-      );
-      this.popup.open("Klant is verwijderd", null, {duration:1500})
-      this.klanten$.splice(index, 1)
+    if(confirm("Weet je zeker dat je " + klant.voornaam + " " + klant.achternaam + " wilt verwijderen? Alle gekoppelde klachten zullen ook worden verwijderd!")){
+      var index = this.klanten$.map(x => {
+        return x.id;
+      }).indexOf(klant.id);
+        this.MsSQLService.deleteKlant(klant).subscribe(data => 
+            data =>  console.log(data)
+        );
+        this.popup.open("Klant is verwijderd", null, {duration:1500})
+        this.klanten$.splice(index, 1)
+    }
   }
 
   addKlant(){  

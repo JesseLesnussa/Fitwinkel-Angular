@@ -34,6 +34,12 @@
           <mat-divider></mat-divider> <br><br>
           <mat-nav-list >
               <mat-spinner *ngIf='!klachten$'></mat-spinner>
+              <div *ngIf='klachten$'>
+                  <div *ngIf='klachten$.length == 0'>
+                      Er zijn nog géén klachten geregistreerd! <button  routerLink="toevoegen"  mat-raised-button color="primary"> Voeg een klacht toe</button>
+                  </div>
+              </div>
+
               <a  matTooltip="Bekijk klacht" matTooltipPosition="left"
                   mat-list-item *ngFor='let klacht of klachten$' routerLink="details/{{klacht.klachtennummer}}">
                   <mat-icon  *ngIf='klacht.s; else close' color="warn" mat-list-icon>close</mat-icon>

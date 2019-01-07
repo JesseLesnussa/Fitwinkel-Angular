@@ -72,6 +72,7 @@ export class KlachtenComponent implements OnInit {
         this.klachten$ = data;
         console.log(data);
         console.log("new filter", value)
+
       } 
     )
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);

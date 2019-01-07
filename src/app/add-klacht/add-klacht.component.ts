@@ -31,7 +31,7 @@ import * as moment from 'moment'
 })
 export class AddKlachtComponent implements OnInit {
 
-  klacht = { 	
+  klacht:any = { 	
     productNaam			    :  "",
     productNummer				: "",	
     serienummer				: "",
@@ -151,26 +151,26 @@ export class AddKlachtComponent implements OnInit {
   }
 
   addKlacht(){
-    if(!this.klacht.klant){
+    console.log('klacht', this.klacht);
+    if(!this.klacht.klant.id){
       this.popup.open("Vul een klant in!" ,null,  {
         duration: 1500,
       })  
     }
 
-    else if(!this.klacht.MerkType){
+    else if(!this.klacht.MerkType.id){
     let sb = this.popup.open("Vul een merk in!" , null,  {
         duration: 1500,
       })  
      
     }
-    else if(!this.klacht.datumbegin){
-      this.popup.open("Vul een begin datum in!" ,null,  {
+    else if(!this.klacht.medewerkerId){
+      this.popup.open("Selecteer een medewerker!" ,null,  {
         duration: 1500,
       })  
     }
     else{
-      let klacht;
-      console.log('klacht', this.klacht);
+  
       this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
           {
             this.popup.open("Nieuwe klacht is toegevoegd!" ,null,  {

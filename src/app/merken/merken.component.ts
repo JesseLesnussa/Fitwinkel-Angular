@@ -42,14 +42,15 @@ export class MerkenComponent implements OnInit {
   }
 
   deleteMerk(merk){  
-    var index = this.merken$.map(x => {
-      return x.id;
-    }).indexOf(merk.id);
-      this.MsSQLService.deleteMerk(merk).subscribe(data => 
-          data =>  console.log(data)
-      );
-      this.popup.open("Merk is verwijderd", null, {duration:1500})
-      this.merken$.splice(index, 1)
-    }
-
+    if(confirm("Weet je zeker dat je " + merk.merknaam + " wilt verwijderen? Alle gekoppelde klachten zullen ook worden verwijderd!")){
+      var index = this.merken$.map(x => {
+        return x.id;
+      }).indexOf(merk.id);
+        this.MsSQLService.deleteMerk(merk).subscribe(data => 
+            data =>  console.log(data)
+        );
+        this.popup.open("Merk is verwijderd", null, {duration:1500})
+        this.merken$.splice(index, 1)
+      }
+  }
 }
