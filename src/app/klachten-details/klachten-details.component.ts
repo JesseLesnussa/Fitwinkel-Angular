@@ -58,11 +58,13 @@ export class KlachtenDetailsComponent implements OnInit {
   }
 
   changeOpgelost(klacht){
-    if(klacht.S == '1') klacht.S = '0'
-    else klacht.S = '1'
+    if(klacht.s == 1) klacht.s = 0
+    else klacht.s = 1
 
     this.data.updateKlacht(klacht).subscribe(data => 
-        console.log("updated")
+      this.popup.open("Status is gewijzigd!" ,null,  {
+        duration: 1500,
+      })  
       )
 
   }
@@ -73,10 +75,10 @@ export class KlachtenDetailsComponent implements OnInit {
     console.log("actie:", this.actie);
     
     this.data.addActie(this.actie).subscribe(data => 
-      console.log(data)
+      this.popup.open("Nieuwe actie toegevoegd!" ,null,  {
+        duration: 1500,
+      })  
     );
-
-    console.log("add", this.acties$);
     this.acties$.push(this.actie);
     
     this.actie = {
@@ -115,7 +117,7 @@ export class KlachtenDetailsComponent implements OnInit {
         this.data.getActies(this.id$).subscribe(
           data =>  this.acties$.splice(index, 1)
         );
-        this.popup.open("Nieuwe actie toegevoegd!" ,null,  {
+        this.popup.open("Actie is verwijderd!" ,null,  {
           duration: 1500,
         })  
       }

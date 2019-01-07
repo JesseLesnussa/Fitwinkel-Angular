@@ -1,8 +1,8 @@
 
   
-  <table id="table">
-    <tr>
-      <td>Bonnummer Fitwinkel</td>
+  <table id="formulier">
+    <tr >
+      <td width="400px">Bonnummer Fitwinkel</td>
       <td>{{klacht.klachtennummer}}</td>
     </tr>
     <tr>
@@ -69,7 +69,7 @@
     </tr>
     <tr>
       <td>Besteldatum</td>
-      <td>{{klacht.aankoopdatum}}</td>
+      <td>{{klacht.aankoopdatum | date}}</td>
     </tr>
     <tr><td colspan=2> </td></tr>
     <tr>
@@ -82,5 +82,7 @@
 
 <div mat-dialog-actions>
     <button mat-button (click)="sluiten()">Terug</button>
+    <!--button mat-button (click)="copy()">Copy tabel</button-->
     <button mat-button (click)="emailKlant(klacht)"  cdkFocusInitial>Stel een mail op</button>
   </div>
+

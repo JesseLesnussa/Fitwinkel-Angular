@@ -44,8 +44,6 @@ export class KlachtenComponent implements OnInit {
     this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
       data => {
         this.klachten$ = data;
-        console.log(data);
-        console.log("new filter", this.filter)
       } 
     )
     this.MsSQLService.getMerken().subscribe(
@@ -115,17 +113,22 @@ export class KlachtenComponent implements OnInit {
   changeOpgelost(event:Event, klacht){
     event.preventDefault();
     event.stopImmediatePropagation();
-    
+
     let currentS = klacht.s
     if(klacht.s == 1) klacht.s = 0
     else klacht.s = 1
 
     if(!this.status) this.status = 1
     else this.status = currentS
-    this.MsSQLService.updateKlacht(klacht).subscribe(data => 
+    this.MsSQLService.updateKlacht(klacht).subscribe(data => {
       this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
         data => this.klachten$ = data
       )
+      this.popup.open("Status is gewijzigd!" ,null,  {
+        duration: 1500,
+      })  
+    }
+
     );
   }
 

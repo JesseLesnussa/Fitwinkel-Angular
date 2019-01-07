@@ -77,7 +77,6 @@ export class MsSQLService {
   else if (!merk && status != null)  url = "https://teamleaderapi.azurewebsites.net/api/klachten?s=" + status 
   else url = "https://teamleaderapi.azurewebsites.net/api/klachten?merknaam=" + merk +"&s=" + status;
 
-  console.log("url", url);
    return this.HttpClient.get(url);
 
 
@@ -92,10 +91,7 @@ export class MsSQLService {
     return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/klachten/", klacht);
   }
 
-  updateKlacht(klacht){
-
-    console.log("Send Post: ", klacht)
-    
+  updateKlacht(klacht){   
     return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/klachten/update", klacht);
   }
 
