@@ -170,11 +170,13 @@ export class AddKlachtComponent implements OnInit {
       })  
     }
     else{
-  
+      this.popup.open("Klacht wordt toegevoegd.." ,null,  {
+        duration: 500,
+      })  
       this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
           {
             this.popup.open("Nieuwe klacht is toegevoegd!" ,null,  {
-              duration: 500,
+              duration: 1500,
             })  
             setTimeout(()=> this.router.navigate(['/']) , 1000)
           }
