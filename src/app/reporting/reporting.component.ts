@@ -11,6 +11,8 @@ export class ReportingComponent implements OnInit {
   klachten: any;
   chart: any[] = [];
   chart2: any[] = [];
+  chart3: any[] = [];
+
   newKlachten: any;
   oldKlachten: any;
   
@@ -21,6 +23,10 @@ export class ReportingComponent implements OnInit {
   openGesloten: any[];
   openGeslotenX: string[];
   openGeslotenY: number[];
+
+  merkStats: any[];
+  merkStatsX: any[];
+  merkStatsY: any[];
 
   constructor(private MsSQLService:MsSQLService) { }
 
@@ -33,6 +39,48 @@ export class ReportingComponent implements OnInit {
     this.MsSQLService.getStatsLimit("old").subscribe(
       data => this.oldKlachten = data
     )
+
+    this.MsSQLService.getStatsMerken().subscribe(
+      data => {
+        let tempData:any;
+        let x:string[] = [];
+        let y:number[] = [];
+        tempData = data;
+        this.merkStats = tempData;
+        this.merkStats.forEach(function(row){
+              x.push(row.merknaam);
+              y.push(row.nKlachten);
+           })
+        this.merkStatsX = x;
+        this.merkStatsY = y;
+
+        this.chart3 = new Chart('canvas3',{
+          type: 'bar',
+          data: {
+            labels: this.merkStatsX,
+            datasets: 
+            [{
+              data: this.merkStatsY,   
+              backgroundColor: '#00a8ff'
+              }
+              ]
+            },
+            options: {
+              legend:{
+                display:false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+          })
+          }
+        )
+
     this.MsSQLService.getStatsMaandJaar().subscribe(
       data => {
         let tempData:any;
@@ -48,13 +96,14 @@ export class ReportingComponent implements OnInit {
         this.maandJaarY = y;
 
         this.chart2 = new Chart('canvas2',{
-          type: 'bar',
+          type: 'line',
           data: {
             labels: this.maandJaarX,
             datasets: 
             [{
               data: this.maandJaarY,   
-              backgroundColor: '#00a8ff'
+              backgroundColor: '#00a8ff',
+              fill: false
               }
               ]
             },

@@ -151,8 +151,13 @@ export class AddKlachtComponent implements OnInit {
   }
 
   addKlacht(){
-    console.log('klacht', this.klacht);
-    if(!this.klacht.klant.id){
+   if(!moment.isDate(this.klacht.aankoopdatum)) {
+    this.popup.open("Controleer het formaat van de aankoopdatum!" ,null,  {
+      duration: 1500,
+    })  
+   }
+  
+    else if(!this.klacht.klant.id){
       this.popup.open("Vul een klant in!" ,null,  {
         duration: 1500,
       })  
@@ -175,23 +180,25 @@ export class AddKlachtComponent implements OnInit {
       })  
       this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
           {
-            this.popup.open("Nieuwe klacht is toegevoegd!" ,null,  {
-              duration: 1500,
-            })  
-            setTimeout(()=> this.router.navigate(['/']) , 1000)
+            let newKlacht:any = data;
+            this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
+              let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur e-mail");
+              sb.onAction().subscribe(()=> this.emailKlant(data,klant));
+              setTimeout(()=> this.router.navigate(['/']) , 1000)
+              
+            })
+            
+
           }
       ); 
-     // let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur e-mail");
-     // console.log(klacht);
-     // console.log(this.klacht);
-     // sb.onAction().subscribe(()=> this.emailKlant(this.klacht));
+
      
     }
   }
 
-  emailKlant(klacht){
-    location.href = "mailto:" + klacht.Email + "?subject=Garantie-aanvraag | Meldingsnummer " + klacht.Klachtennummer + 
-    "&body=Geachte heer/mevrouw " + klacht.Klantnaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.Klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
+  emailKlant(klacht, klant){
+    location.href = "mailto:" + klant.email + "?subject=Garantie-aanvraag | Meldingsnummer " + klacht.klachtennummer + 
+    "&body=Geachte heer/mevrouw " + klant.achternaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
   }
 
 }

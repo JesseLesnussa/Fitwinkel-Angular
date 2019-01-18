@@ -65,14 +65,10 @@ export class KlachtenComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-    console.log("filter", value)
     const filterValue = value.toLowerCase();
     this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
       data => {
         this.klachten$ = data;
-        console.log(data);
-        console.log("new filter", value)
-
       } 
     )
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);

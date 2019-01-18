@@ -21,6 +21,11 @@ export class MsSQLService {
   getStatsMaandJaar(){
     return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/stats/maandjaar")
   }
+
+  getStatsMerken(){
+    return this.HttpClient.get("http://teamleaderapi.azurewebsites.net/api/stats/merken")
+  }
+
   getKlachten(){
     
     return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/klachten/")

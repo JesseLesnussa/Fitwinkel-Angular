@@ -21,8 +21,8 @@
     <br>
 
       <mat-form-field color="warn">
-         <mat-select  [(ngModel)]="klacht.MerkType"    placeholder="Merk">
-          <mat-option *ngFor='let merk of merken'  [value]="merk"> {{merk.merknaam}} </mat-option>
+         <mat-select  [(ngModel)]="klacht.MerkType"    placeholder="Merk *">
+          <mat-option required *ngFor='let merk of merken'  [value]="merk"> {{merk.merknaam}} </mat-option>
         </mat-select>        
       </mat-form-field> 
       <br>
@@ -54,18 +54,11 @@
         </mat-form-field>
         <br>
         <mat-form-field color="warn">
-            <input [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum" >
+            <input [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum *" >
             <mat-datepicker-toggle matSuffix [for]="Aankoopdatum"></mat-datepicker-toggle>
             <mat-datepicker touchUi #Aankoopdatum color="warn"></mat-datepicker>
           </mat-form-field>
           <br>
-          <!--
-          <mat-form-field color="warn"> 
-            <input [(ngModel)]="klacht.datumbegin" matInput [matDatepicker]="DatumBegin" placeholder="Meldingsdatum">
-            <mat-datepicker-toggle matSuffix [for]="DatumBegin" color="warn"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #DatumBegin color="warn"></mat-datepicker>
-          </mat-form-field>
-          <br> -->    
           <mat-form-field color="warn">
             <mat-select  [(ngModel)]="klacht.medewerkerId"    placeholder="Medewerker" required>
               <mat-option *ngFor='let mw of medewerkers' [value]="mw.medewerkerId"> {{mw.voornaam}} {{mw.achternaam}} </mat-option>
@@ -82,7 +75,8 @@
                     person
                     </i>
               </button>
-          Klant</mat-card-subtitle>
+          Klant
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-divider></mat-divider>
       <br>

@@ -1,13 +1,12 @@
   <div id="container">
       <mat-card id="header">
             <mat-card-title>Rapportage</mat-card-title> 
-          <mat-card-subtitle>Overzicht klachten</mat-card-subtitle>
         
       </mat-card>
     
       <mat-card class="stat">
         <mat-card-subtitle>
-            <button mat-mini-fab>
+            <button mat-mini-fab >
                 <i class="material-icons">
                     assessment
                     </i>
@@ -41,6 +40,26 @@
             
             </mat-card>
 
+            
+        <mat-card class="stat">
+            <mat-card-subtitle>
+                <button mat-mini-fab>
+                    <i class="material-icons">
+                        assessment
+                        </i>
+                  </button>
+              Aantal klachten per merk 
+            </mat-card-subtitle>
+            <mat-divider></mat-divider> <br>
+
+            <div [hidden]="!chart3">
+                <canvas id="canvas3">
+                  {{canvas}}
+                </canvas>
+              </div>
+            
+            </mat-card>
+
           <mat-card class="stat">
               <mat-card-subtitle>
                   <button mat-mini-fab>
@@ -54,7 +73,7 @@
               <div>
                   <mat-list>
                       <mat-list-item *ngFor='let klacht of newKlachten'>
-                          <mat-icon  mat-list-icon>insert_drive_file</mat-icon>
+                          <mat-icon   mat-list-icon>insert_drive_file</mat-icon>
                         <h4 mat-line> {{klacht.klachtennummer}}</h4>
                         <p mat-line> {{klacht.datumbegin}}</p>
                         <button mat-raised-button color="warn" routerLink="../details/{{klacht.klachtennummer}}">
