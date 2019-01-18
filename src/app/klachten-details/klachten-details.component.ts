@@ -8,6 +8,7 @@ import * as GoogleSpreadsheet from 'google-spreadsheet';
 import { MatSnackBar } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {KlachtTableComponent } from '../klacht-table/klacht-table.component'
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-klachten-details',
@@ -27,6 +28,8 @@ export class KlachtenDetailsComponent implements OnInit {
   medewerker$: any;
   klant$: any;
   merk$: any;
+ 
+
 
   actie: Actie = {
     "klantnaam": "",
@@ -58,22 +61,47 @@ export class KlachtenDetailsComponent implements OnInit {
   }
 
   changeOpgelost(klacht){
-    if(klacht.s == 1) klacht.s = 0
-    else klacht.s = 1
+    let actieString: string = "Status gewijzigd naar ";
+
+    if(klacht.s == 1) 
+    {
+      klacht.s = 0;
+      actieString = actieString +  "Afgerond";
+    }
+    else 
+    {
+      klacht.s = 1
+      actieString = actieString +  "Openstaand";
+    }
+
+    let actie:Actie = {
+      "klantnaam": "",
+      "datum": moment(new Date()).format("YYYY-MM-DD"),
+      "klachtennummer":klacht.klachtennummer,
+      "id": 0,
+      "merk": "",
+      "actie": actieString  
+    }
 
     this.data.updateKlacht(klacht).subscribe(data => 
-      this.popup.open("Status is gewijzigd!" ,null,  {
-        duration: 1500,
-      })  
+      {
+        this.popup.open("Status is gewijzigd!" ,null,  {
+          duration: 1500,
+        })  
+        this.data.addActie(actie).subscribe(acties => {
+          this.data.getActies(this.id$).subscribe(
+            data => this.acties$ = data
+          )
+        })
+      }
+
       )
 
   }
 
   addActie(){
     this.actie.klachtennummer = this.id$;
-    this.actie.datum = Date();
-    console.log("actie:", this.actie);
-    
+    this.actie.datum = Date();   
     this.data.addActie(this.actie).subscribe(data => 
       this.popup.open("Nieuwe actie toegevoegd!" ,null,  {
         duration: 1500,

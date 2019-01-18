@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import {map, startWith, concat} from 'rxjs/operators';
 import * as moment from 'moment'
+import { Actie } from '../actie';
 
 
 @Component({
@@ -181,9 +182,20 @@ export class AddKlachtComponent implements OnInit {
       this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
           {
             let newKlacht:any = data;
+            let actie:Actie = {
+              "klantnaam": "",
+              "datum": moment(new Date()).format("YYYY-MM-DD"),
+              "klachtennummer": newKlacht.klachtennummer,
+              "id": 0,
+              "merk": "",
+              "actie": "Klacht aangemaakt"  
+            }
+            
             this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
               let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur e-mail");
               sb.onAction().subscribe(()=> this.emailKlant(data,klant));
+              this.MsSQLService.addActie(actie).subscribe(acties => {
+              })
               setTimeout(()=> this.router.navigate(['/']) , 1000)
               
             })
