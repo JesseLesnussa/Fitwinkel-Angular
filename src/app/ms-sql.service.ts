@@ -11,76 +11,76 @@ export class MsSQLService {
   constructor(private HttpClient:HttpClient) { }
   
   getStatsLimit(type){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/stats/limit?type=" + type)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/stats/limit?type=" + type)
   }
 
   getStatsStatus(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/stats/status")
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/stats/status")
   }
 
   getStatsMaandJaar(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/stats/maandjaar")
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/stats/maandjaar")
   }
 
   getStatsMerken(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/stats/merken")
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/stats/merken")
   }
 
   getKlachten(){
     
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/klachten/")
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten/")
   }
 
   getKlachtenByMedewerker(medewerkerId){
   
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/klachten?medewerkerId=" + medewerkerId)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten?medewerkerId=" + medewerkerId)
   }
 
   getMerken(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/merken/")
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/merken/")
   }
   getMerk(id){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/merken/" + id)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/merken/" + id)
   }
 
   getDetailsKlacht(id){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/klachten/"+id)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten/"+id)
   }
 
   getActies(id){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/acties/"+id)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/acties/"+id)
   }
 
   addActie(actie){
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/acties/", actie);
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/acties/", actie);
   }
   addMerk(merk){
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/merken/", merk);
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/merken/", merk);
   }
   addMedewerker(medewerker){
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/medewerkers/", medewerker);
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/medewerkers/", medewerker);
   }
   deleteActie(actie){
-    return this.HttpClient.delete("https://teamleaderapi.azurewebsites.net/api/acties/" + actie.id);
+    return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/acties/" + actie.id);
   }
   deleteMedewerker(medewerker){
-    return this.HttpClient.delete("https://teamleaderapi.azurewebsites.net/api/medewerkers/" + medewerker.medewerkerId );
+    return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/medewerkers/" + medewerker.medewerkerId );
   }
   deleteMerk(merk){
-    return this.HttpClient.delete("https://teamleaderapi.azurewebsites.net/api/merken/"+merk.id);
+    return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/merken/"+merk.id);
   }
   getKlachtByMerk(merk){
  //   return this.HttpClient.get("http://localhost:8080/fitwinkel/klachten.php?merk="+merk)  
- return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/klachten")  
+ return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten")  
   }
 
   getKlachtByFilter(merk,status){
 
-    let url = "https://teamleaderapi.azurewebsites.net/api/klachten";
+    let url = "https://fitwinkel.azurewebsites.net/api/klachten";
   if(!merk && status == null) url = url
-  else if (merk != null && status == null)  url = "https://teamleaderapi.azurewebsites.net/api/klachten?merknaam=" + merk 
-  else if (!merk && status != null)  url = "https://teamleaderapi.azurewebsites.net/api/klachten?s=" + status 
-  else url = "https://teamleaderapi.azurewebsites.net/api/klachten?merknaam=" + merk +"&s=" + status;
+  else if (merk != null && status == null)  url = "https://fitwinkel.azurewebsites.net/api/klachten?merknaam=" + merk 
+  else if (!merk && status != null)  url = "https://fitwinkel.azurewebsites.net/api/klachten?s=" + status 
+  else url = "https://fitwinkel.azurewebsites.net/api/klachten?merknaam=" + merk +"&s=" + status;
 
    return this.HttpClient.get(url);
 
@@ -93,39 +93,39 @@ export class MsSQLService {
     klacht.klant = [];
     //Klant object mappen naar de volle JSON-object. Één laag omlaag 
     
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/klachten/", klacht);
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/", klacht);
   }
 
   updateKlacht(klacht){   
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/klachten/update", klacht);
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/update", klacht);
   }
 
 
   getKlanten(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/relaties") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties") 
   }
   getKlant(id){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/relaties/"+id) 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
   }
 
   deleteKlant(klant){
-    return this.HttpClient.delete("https://teamleaderapi.azurewebsites.net/api/relaties/" + klant.id) 
+    return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/relaties/" + klant.id) 
   }
 
   deleteKlacht(klacht){
-    return this.HttpClient.delete("https://teamleaderapi.azurewebsites.net/api/klachten/" + klacht.klachtennummer) 
+    return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/klachten/" + klacht.klachtennummer) 
   }
 
   addKlant(klant){
-    return this.HttpClient.post("https://teamleaderapi.azurewebsites.net/api/relaties/", klant) 
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/relaties/", klant) 
   }
 
   getMedewerkers(){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/medewerkers") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/medewerkers") 
   }
 
   getMedewerker(id){
-    return this.HttpClient.get("https://teamleaderapi.azurewebsites.net/api/medewerkers/"+id)
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/medewerkers/"+id)
   }
 
 }
