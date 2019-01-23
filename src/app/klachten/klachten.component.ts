@@ -38,7 +38,8 @@ export class KlachtenComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   context = this;
-  
+  klachtenArray: any[];
+
   ngOnInit() {
   
     this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
