@@ -1,6 +1,16 @@
-td, thead, table, tr{
-    border: 1px solid rgb(175, 175, 175);
-}
+table, td, th {  
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 5px;
+  }
 
 .omschrijving{
     height: 60px;

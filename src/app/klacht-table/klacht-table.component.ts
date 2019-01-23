@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Klacht } from '../klacht';
 import { KlachtenDetailsComponent } from '../klachten-details/klachten-details.component';
 import { Klant } from '../klant';
+import * as moment from 'moment';
 
 
 @Component({
@@ -57,7 +58,7 @@ export class KlachtTableComponent implements OnInit {
     "%09Serienummer %09%09%09" + this.klacht.serienummer +  " %0D%0A" + 
     "%09Onderdeelnaam en nummer %09" + this.klacht.defectonderdeel + " %0D%0A" + 
     "%09Ordernummer %09%09%09" + this.klacht.ordernummer + " %0D%0A" + 
-    "%09Besteldatum %09%09%09" + this.klacht.aankoopdatum +  " %0D%0A%0D%0A" +
+    "%09Besteldatum %09%09%09"  + moment(new Date()).format("YYYY-MM-DD") +  " %0D%0A%0D%0A" +
     "3. Omschrijving van het defect " + " %0D%0A" + this.klacht.klachtenomschrijving +
     " %0D%0A%0D%0A"
   }
