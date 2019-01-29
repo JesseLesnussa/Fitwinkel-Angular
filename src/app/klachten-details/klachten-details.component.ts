@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MsSQLService } from '../ms-sql.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actie } from '../actie';
 import * as XLS from 'xlsx';
 import * as GoogleSpreadsheet from 'google-spreadsheet';
@@ -17,7 +17,7 @@ import * as moment from 'moment'
 })
 export class KlachtenDetailsComponent implements OnInit {
 
-  constructor(private data:MsSQLService, private route:ActivatedRoute,
+  constructor(private router:Router, private data:MsSQLService, private route:ActivatedRoute,
     private popup:MatSnackBar, public dialog: MatDialog) { 
     this.route.params.subscribe( params => this.id$ = params.id);
   }
@@ -121,7 +121,7 @@ export class KlachtenDetailsComponent implements OnInit {
 
   emailKlant(klacht, klant){
     location.href = "mailto:" + klant.email + "?subject=Garantie-aanvraag | Meldingsnummer " + klacht.klachtennummer + 
-    "&body=Geachte heer/mevrouw " + klant.achternaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
+    "&body=Geachte heer/mevrouw " + klant.voornaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
   }
 
   emailLeverancier(klacht, klant, merk){
@@ -152,5 +152,17 @@ export class KlachtenDetailsComponent implements OnInit {
 
     );
 
+  }
+
+  deleteKlacht(){
+    if(confirm('Weet u zeker dat u deze klacht wilt verwijderen?'))
+    {
+      this.data.deleteKlacht(this.klacht$).subscribe(data =>{ 
+        this.popup.open("Klacht is verwijderd!" ,null,  {
+          duration: 1500,
+        })  
+        setTimeout(()=> this.router.navigate(['/']) , 1000)
+      })
+    }
   }
 }

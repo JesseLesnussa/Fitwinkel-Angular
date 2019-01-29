@@ -43,8 +43,7 @@ export class KlachtTableComponent implements OnInit {
     "?body=Geachte heer/mevrouw, %0D%0A%0D%0A"+
     "Bonnummer Fitwinkel " + this.klacht.klachtennummer + " %0D%0A%0D%0A" + 
     "1.Klantgegevens " + " %0D%0A" + 
-    "%09Voornaam %09%09%09" + this.klant.voornaam + " %0D%0A" + 
-    "%09Achternaam %09%09%09" + this.klant.achternaam  + " %0D%0A" + 
+    "%09Klantnaam %09%09%09" + this.klant.voornaam + " %0D%0A" + 
     "%09Adres %09%09%09%09" + this.klant.adres + " %0D%0A" + 
     "%09Postcode %09%09%09" + this.klant.postcode + " %0D%0A" + 
     "%09Woonplaats %09%09%09" + this.klant.woonplaats + " %0D%0A" + 

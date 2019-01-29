@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MsSQLService } from '../ms-sql.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, MatDialog} from '@angular/material';
 import { Klacht } from '../klacht';
 import { Klant } from '../klant';
 import { Router } from "@angular/router";
@@ -176,9 +176,7 @@ export class AddKlachtComponent implements OnInit {
       })  
     }
     else{
-      this.popup.open("Klacht wordt toegevoegd.." ,null,  {
-        duration: 500,
-      })  
+      this.popup.open("Klacht wordt toegevoegd..." ,null)  
       this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
           {
             let newKlacht:any = data;
@@ -192,7 +190,7 @@ export class AddKlachtComponent implements OnInit {
             }
             
             this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
-              let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur e-mail");
+              let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur bevestiging garantie-aanvraag", {duration:30000});
               sb.onAction().subscribe(()=> this.emailKlant(data,klant));
               this.MsSQLService.addActie(actie).subscribe(acties => {
               })
@@ -212,5 +210,6 @@ export class AddKlachtComponent implements OnInit {
     location.href = "mailto:" + klant.email + "?subject=Garantie-aanvraag | Meldingsnummer " + klacht.klachtennummer + 
     "&body=Geachte heer/mevrouw " + klant.achternaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
   }
+
 
 }

@@ -6,7 +6,8 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import {FormControl} from '@angular/forms';
 import {map, startWith, filter} from 'rxjs/operators';
 import  * as moment from 'moment';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
 
 @Component({
   selector: 'app-klachten',
@@ -30,7 +31,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class KlachtenComponent implements OnInit {
 
-  constructor(private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
+  constructor(public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
   klachten$: any;
   filter = "";
   status = 1;
@@ -70,6 +71,9 @@ export class KlachtenComponent implements OnInit {
     this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
       data => {
         this.klachten$ = data;
+        let tempData:any = data;
+        
+        this.klachtenArray = tempData;
       } 
     )
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
@@ -143,5 +147,12 @@ export class KlachtenComponent implements OnInit {
       })
     }
 
+  }
+
+  addKlachtDialog(){
+    const dialogRef = this.dialog.open(AddKlachtComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

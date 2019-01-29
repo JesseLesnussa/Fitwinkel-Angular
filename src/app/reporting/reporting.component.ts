@@ -103,7 +103,7 @@ export class ReportingComponent implements OnInit {
             [{
               data: this.maandJaarY,   
               backgroundColor: '#00a8ff',
-              fill: false
+              fill: true
               }
               ]
             },

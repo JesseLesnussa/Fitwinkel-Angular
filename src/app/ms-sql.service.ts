@@ -102,7 +102,7 @@ export class MsSQLService {
 
 
   getKlanten(){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
   }
   getKlant(id){
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 

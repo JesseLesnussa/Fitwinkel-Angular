@@ -93,7 +93,14 @@
                           autorenew
                       </i>    
                     </button>    
-              </ng-template> <br>
+              </ng-template> 
+              <button mat-raised-button (click)='deleteKlacht()'>
+                Verwijder klacht
+                <i class="material-icons">
+                  delete
+                </i>
+              </button>
+              <br>
     </mat-card-content>
   </mat-card>
 
@@ -105,7 +112,7 @@
                 person
                 </i>
           </button>
-      Klant abc {{datum}}</mat-card-subtitle>
+      Klant</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content  >
@@ -115,27 +122,23 @@
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input disabled [(ngModel)]="klant$.achternaam" matInput placeholder="Klantadres">
-            </mat-form-field>
-            <br>
-            <mat-form-field>
               <input disabled [(ngModel)]="klant$.adres" matInput placeholder="Klantpostcode">
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input disabled [(ngModel)]="klant$.postcode" matInput placeholder="Woonplaats">
+              <input disabled [(ngModel)]="klant$.postcode" matInput placeholder="Postcode">
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input disabled [(ngModel)]="klant$.woonplaats" matInput placeholder="Telefoonnummer">
+              <input disabled [(ngModel)]="klant$.woonplaats" matInput placeholder="Woonplaats">
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input disabled [(ngModel)]="klant$.telefoonnummer" matInput placeholder="Mobiel">
+              <input disabled [(ngModel)]="klant$.telefoonnummer" matInput placeholder="Telefoon">
             </mat-form-field>      
             <br>
             <mat-form-field>
-              <input disabled [(ngModel)]="klant$.mobielnummer" matInput placeholder="Email">
+              <input disabled [(ngModel)]="klant$.mobielnummer" matInput placeholder="Mobiel">
             </mat-form-field>   
             <br>
             <mat-form-field>
@@ -145,7 +148,7 @@
                 <i class="material-icons">
                     email
                 </i>
-              Stuur e-mail naar {{klant$.voornaam}} {{klant$.achternaam}}</button>
+              Stuur e-mail naar {{klant$.voornaam}}</button>
   </mat-card-content>
 </mat-card>
 <mat-card class="acties">

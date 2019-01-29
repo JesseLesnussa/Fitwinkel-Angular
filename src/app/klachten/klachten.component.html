@@ -30,6 +30,13 @@
             </mat-select>
             <br>
           </mat-form-field>
+          <button cdkFocusInitial mat-button *ngIf='klachten$' (click)='addKlachtDialog()'>
+            Nieuwe klacht toevoegen
+            <!-- 
+              Open modal => Klacht toevoegen met nieuwe design.
+              Of uitsluitend via header knop toevoegen van klachten.
+            -->
+          </button>
 
           <mat-divider></mat-divider> <br><br>
           <mat-nav-list >

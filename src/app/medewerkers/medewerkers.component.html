@@ -15,16 +15,16 @@
       Medewerkers 
     </mat-card-subtitle>
     <mat-divider></mat-divider> <br>
-    <mat-list>
+    <mat-nav-list>
         <mat-spinner *ngIf='!medewerkers'></mat-spinner>
-        <mat-list-item *ngFor='let medewerker of medewerkers'>
-            <button [disabled]="!medewerker.medewerkerId"  (click)='deleteMedewerker(medewerker)' mat-icon-button>
+        <a routerLink="/medewerkers/{{medewerker.medewerkerId}}" matTooltip="Bekijk klacht" matTooltipPosition="left" mat-list-item *ngFor='let medewerker of medewerkers'>
+            <button [disabled]="!medewerker.medewerkerId"  (click)='deleteMedewerker($event, medewerker)' mat-icon-button>
                 <i class="material-icons">delete</i>
               </button>
-         <h4  mat-line><a routerLink="/medewerkers/{{medewerker.medewerkerId}}"> {{medewerker.voornaam}} {{medewerker.achternaam}}</a></h4>
+         <h4  mat-line> {{medewerker.voornaam}} {{medewerker.achternaam}}</h4>
           <p mat-line> {{medewerker.telefoonnummer}} | {{medewerker.email}} </p>
-        </mat-list-item>
-      </mat-list>
+            </a>
+      </mat-nav-list>
 
     </mat-card>
     <mat-card class="addMedewerker"> 

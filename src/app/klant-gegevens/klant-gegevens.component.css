@@ -14,7 +14,8 @@ mat-card-subtitle button{
     display: flex;
     flex-wrap: wrap;
     width:98%;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: flex-start;
 }
 
 .addKlant{

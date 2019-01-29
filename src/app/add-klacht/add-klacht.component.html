@@ -82,12 +82,11 @@
       <br>
         <mat-form-field color="accent">
           <mat-select   [(ngModel)]="klacht.klant"    placeholder="Klant" required>
-            <mat-option   *ngFor='let klant of klanten$' [value]="klant"> {{klant.voornaam}} {{klant.achternaam}} </mat-option>
-          </mat-select>
-          
+            <mat-option   *ngFor='let klant of klanten$' [value]="klant"> {{klant.voornaam}} | {{klant.email}} </mat-option>
+          </mat-select>         
         </mat-form-field>
         <br>
-      <mat-form-field>
+      <!--mat-form-field>
           <input disabled [(ngModel)]="klacht.klant.adres" matInput placeholder="Adres">
         </mat-form-field>
         <br>
@@ -110,7 +109,7 @@
         <mat-form-field>
           <input disabled [(ngModel)]="klacht.klant.email" matInput placeholder="Email">
         </mat-form-field>      
-        <br>
+        <br -->
         <mat-card-actions>
           <button (click)="addKlacht()" mat-raised-button color="primary"> Toevoegen</button>
         </mat-card-actions>

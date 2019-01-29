@@ -1,7 +1,7 @@
 <nav>
-  <ul>
+  <ul *ngIf='currentUrl'>
     <li  matTooltip="Overzicht klachten" matTooltipPosition="right">
-      <a routerLink="" [class.activated]="currentUrl == '/'">
+      <a routerLink="" [class.activated]="currentUrl == '/' || currentUrl.includes('details')">
         <i 
         class="material-icons">format_list_bulleted
       </i>
@@ -17,13 +17,13 @@
         <i class="material-icons">business</i>
       </a>
     </li>   
-    <li matTooltip="Overzicht klanten" matTooltipPosition="right">
+    <!--li matTooltip="Overzicht klanten" matTooltipPosition="right">
         <a  routerLink="/klanten" [class.activated]="currentUrl == '/klanten'">
           <i class="material-icons">person</i>
         </a>
-      </li>
+      </li-->
       <li matTooltip="Overzicht medewerkers" matTooltipPosition="right" >
-        <a  routerLink="/medewerkers" [class.activated]="currentUrl == '/medewerkers'">
+        <a  routerLink="/medewerkers" [class.activated]="currentUrl.includes('medewerkers') ">
           <i class="material-icons">face</i>
         </a>
       </li>

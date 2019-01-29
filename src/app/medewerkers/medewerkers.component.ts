@@ -42,7 +42,9 @@ export class MedewerkersComponent implements OnInit {
     
   }
 
-  deleteMedewerker(medewerker){
+  deleteMedewerker(event:Event, medewerker){
+    event.preventDefault();
+    event.stopImmediatePropagation();
     if(confirm("Weet je zeker dat je " + medewerker.voornaam + " " + medewerker.achternaam + " wilt verwijderen? Alle gekoppelde klachten zullen ook worden verwijderd!")){
       var index = this.medewerkers.map(x => {
         return x.medewerkerId;
