@@ -89,8 +89,15 @@ mat-spinner{
 }
 
 .mat-column-menu,
-.mat-column-status {
-  max-width: 30px;
+.mat-column-status,
+.mat-column-mailKlant,
+.mat-column-klachtIngediend,
+.mat-column-omgeruild
+ {
+     padding-left:5px;
+    text-align: center;
+    margin:auto;
+    max-width: 60px;
 }
 
 .mat-column-Merknaam{
@@ -98,9 +105,13 @@ mat-spinner{
 }
 .mat-column-Klachtennummer,
 .mat-column-Datum {
-  max-width: 150px;
+    max-width: 150px;
 }
 
 mat-table{
     text-align: center;
+}
+
+.mat-row{
+    min-height: 80px;
 }

@@ -41,7 +41,8 @@ export class KlachtenComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   context = this;
   klachtenArray: any[];
-  displayedColumns: string[] = ['status','Klachtennummer', 'Datum', 'Merknaam', 'Omschrijving','menu'];
+  displayedColumns: string[] = 
+  ['status','Klachtennummer', 'Datum', 'Merknaam', 'Omschrijving', 'mailKlant', 'klachtIngediend', 'omgeruild' ,'menu'];
 
 
   ngOnInit() {
@@ -157,7 +158,7 @@ export class KlachtenComponent implements OnInit {
 
   addKlachtDialog(){
     const dialogRef = this.dialog.open(AddKlachtComponent, {
-      minWidth: '500px'
+      minWidth: '700px'
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

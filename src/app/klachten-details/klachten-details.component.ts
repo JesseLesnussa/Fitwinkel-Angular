@@ -100,22 +100,31 @@ export class KlachtenDetailsComponent implements OnInit {
   }
 
   addActie(){
-    this.actie.klachtennummer = this.id$;
-    this.actie.datum = Date();   
-    this.data.addActie(this.actie).subscribe(data => 
-      this.popup.open("Nieuwe actie toegevoegd!" ,null,  {
+    if(!this.actie.klantnaam)
+    {
+      this.popup.open("Selecteer een medewerker" ,null,  {
         duration: 1500,
       })  
-    );
-    this.acties$.push(this.actie);
-    
-    this.actie = {
-      "klantnaam": "",
-      "datum": "",
-      "klachtennummer":0,
-      "id": 0,
-      "merk": "",
-      "actie": ""
+    }
+    else
+    {
+      this.actie.klachtennummer = this.id$;
+      this.actie.datum = Date();   
+      this.data.addActie(this.actie).subscribe(data => 
+        this.popup.open("Nieuwe actie toegevoegd!" ,null,  {
+          duration: 1500,
+        })  
+      );
+      this.acties$.push(this.actie);
+      
+      this.actie = {
+        "klantnaam": "",
+        "datum": "",
+        "klachtennummer":0,
+        "id": 0,
+        "merk": "",
+        "actie": ""
+      }
     }
   }
 

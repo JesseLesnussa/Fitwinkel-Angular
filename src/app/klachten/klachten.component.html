@@ -30,7 +30,7 @@
             </mat-select>
             <br>
           </mat-form-field>
-          <button cdkFocusInitial mat-button *ngIf='klachten$' (click)='addKlachtDialog()'>
+          <button cdkFocusInitial mat-raised-button *ngIf='klachten$' (click)='addKlachtDialog()'>
             Nieuwe klacht toevoegen
             <!-- 
               Open modal => Klacht toevoegen met nieuwe design.
@@ -84,6 +84,38 @@
             
           </mat-cell>
         </ng-container>
+
+ 
+        <ng-container matColumnDef="mailKlant">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+              <button mat-mini-fab 
+              matTooltip="Klant is op de hoogte gesteld!" matTooltipPosition="above" >
+                  <mat-icon>email</mat-icon>
+                </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="klachtIngediend">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+                <button mat-mini-fab disabled
+                matTooltip="Klacht is nog niet ingediend bij de leverancier" matTooltipPosition="above" >
+                    <mat-icon>assignment</mat-icon>
+                  </button>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="omgeruild">
+              <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+              <mat-cell *matCellDef="let element"> 
+                  <button mat-mini-fab disabled
+                  matTooltip="Product is nog niet omgeruild" matTooltipPosition="above" >
+                      <mat-icon>swap_horiz</mat-icon>
+                    </button>
+              </mat-cell>
+            </ng-container>
+    
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="menu">

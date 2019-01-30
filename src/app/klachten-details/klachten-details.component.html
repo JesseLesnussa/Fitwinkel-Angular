@@ -190,7 +190,15 @@
         
         </mat-form-field>
           <mat-form-field>
-              <input [(ngModel)]="actie.actie"  matInput placeholder="Omschrijving">
+              <input [(ngModel)]="actie.actie"  matInput placeholder="Omschrijving" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option  value="E-mail verstuurd naar klant">
+                    E-mail verstuurd naar klant
+                </mat-option>
+                <mat-option *ngIf='merk$'  value="E-mail verstuurd naar leverancier">
+                    E-mail verstuurd naar {{merk$.merknaam}}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field> 
             <button (click)="addActie()" mat-raised-button color="primary"> Toevoegen</button>
 </mat-card>

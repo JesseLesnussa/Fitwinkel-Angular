@@ -45,13 +45,13 @@
       <br>
       <mat-form-field color="warn">
           <input [(ngModel)]="klacht.productNummer" matInput placeholder="Productnummer">
-          <mat-hint>bijvoorbeeld PFEVEL95910</mat-hint>   
+          <mat-hint>Bijvoorbeeld PFEVEL95910</mat-hint>   
         </mat-form-field>
       <br>
       <div *ngIf="klacht.MerkType.serienummerVerplicht ==  1">
         <mat-form-field color="warn" >
           <input [(ngModel)]="klacht.serienummer" matInput placeholder="Serienummer *">
-          <mat-hint>bijvoorbeeld N° Serie S24G03848</mat-hint>   
+          <mat-hint>Bijvoorbeeld N° Serie S24G03848</mat-hint>   
         </mat-form-field>
       </div>
     
@@ -82,7 +82,11 @@
             </mat-select>         
           </mat-form-field>
 
-          <mat-card-actions >
-              <button class='addButton' (click)="addKlacht()" mat-raised-button color="primary"> Toevoegen</button>
+          <div mat-dialog-actions>
+              <button class='addButton' (click)="addKlacht()" mat-raised-button color="primary"> Klacht registreren</button>
               <mat-progress-bar *ngIf='isSaving' mode="buffer"></mat-progress-bar>
-            </mat-card-actions>
+              <br>
+
+              <button class='addButton'  mat-raised-button (click)="sluiten()">Terug</button>
+              <!--button mat-button (click)="copy()">Copy tabel</button-->
+            </div>
