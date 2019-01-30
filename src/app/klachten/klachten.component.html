@@ -94,7 +94,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button (click)='changeOpgelost($event, element)' mat-menu-item>
+                    <button (click)='changeOpgelost($event, element, $this)' mat-menu-item>
                       <mat-icon>autorenew</mat-icon>
                     Wijzig status
                     </button>
@@ -108,7 +108,7 @@
           </ng-container>
               
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"
+        <mat-row matTooltip="Bekijk klacht" matTooltipPosition="left"  *matRowDef="let row; columns: displayedColumns;"
          (click)="selectRow(row)"
          ></mat-row>
       </mat-table>

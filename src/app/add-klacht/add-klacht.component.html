@@ -22,7 +22,7 @@
       </mat-form-field>
       <ng-template #loadingKlantenTemp>
           <mat-progress-bar mode="query" color="accent"></mat-progress-bar>
-          Bezig met inladen van klanten..
+          <span class='msgLoading'>Bezig met het inladen van klanten . . .</span>
           <br>
           <br>
       </ng-template>
@@ -30,12 +30,12 @@
       <mat-form-field *ngIf='!loadingMerken; else loadingMerkenTemp' color="warn">
          <mat-select  [(ngModel)]="klacht.MerkType"    placeholder="Merk *">
           <mat-option required *ngFor='let merk of merken'  [value]="merk"> {{merk.merknaam}} </mat-option>
-        </mat-select>        
+        </mat-select>     
+
       </mat-form-field> 
       <ng-template #loadingMerkenTemp>
           <mat-progress-bar mode="query" color="warn"></mat-progress-bar>
-          Bezig met inladen van merken..
-          <br>
+          <span class='msgLoading'>Bezig met het inladen van merken . . .</span>  
           <br>
       </ng-template>
       <br>
@@ -45,16 +45,19 @@
       <br>
       <mat-form-field color="warn">
           <input [(ngModel)]="klacht.productNummer" matInput placeholder="Productnummer">
+          <mat-hint>bijvoorbeeld PFEVEL95910</mat-hint>   
         </mat-form-field>
       <br>
       <div *ngIf="klacht.MerkType.serienummerVerplicht ==  1">
         <mat-form-field color="warn" >
           <input [(ngModel)]="klacht.serienummer" matInput placeholder="Serienummer *">
+          <mat-hint>bijvoorbeeld N° Serie S24G03848</mat-hint>   
         </mat-form-field>
       </div>
     
       <mat-form-field color="warn">
         <input [(ngModel)]="klacht.defectOnderdeel" matInput placeholder="Defect onderdeel">
+        <mat-hint>Bij defect onderdeel: onderdeelnaam en nummer (staat in de producthandleiding)</mat-hint>   
       </mat-form-field>
       <br>
       <mat-form-field color="warn">
@@ -70,6 +73,7 @@
             <input [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum *" >
             <mat-datepicker-toggle matSuffix [for]="Aankoopdatum"></mat-datepicker-toggle>
             <mat-datepicker touchUi #Aankoopdatum color="warn"></mat-datepicker>
+            <mat-hint>dd/mm/yyyy</mat-hint>   
           </mat-form-field>
           <br>
           <mat-form-field color="warn">

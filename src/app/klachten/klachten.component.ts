@@ -115,8 +115,10 @@ export class KlachtenComponent implements OnInit {
     klacht.S = '1';
   }
 
-  changeOpgelost(event:Event, klacht){
+  changeOpgelost(event:Event, klacht, menu){
+    console.log(menu);
     console.log(klacht);
+    console.log(event);
     event.preventDefault();
     event.stopImmediatePropagation();
 

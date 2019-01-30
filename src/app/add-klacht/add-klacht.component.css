@@ -55,3 +55,9 @@ mat-card
     min-width: 100% !important;
     margin: 3px 0px;
 }
+
+.msgLoading
+{
+    color: lightgray;
+    text-align: center !important;
+}
