@@ -62,7 +62,9 @@ export class AddKlachtComponent implements OnInit {
   filteredMerk: Observable<string[]>;
   filteredMedewerker: Observable<string[]>;
   filteredKlant: Observable<string[]>;
-
+  loadingMerken:boolean = true;
+  loadingKlanten:boolean = true;
+  isSaving:boolean = false;
   constructor(private router:Router, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { 
     this.MsSQLService.getKlanten().subscribe(
       data => {
@@ -82,6 +84,7 @@ export class AddKlachtComponent implements OnInit {
       ); 
     this.MsSQLService.getMerken().subscribe(
       data => {
+        this.loadingMerken = false;
         this.merken = data
         var namen:string[] = [];
         var tempData:any = data;
@@ -152,7 +155,15 @@ export class AddKlachtComponent implements OnInit {
   }
 
   addKlacht(){
-   if(!moment.isDate(this.klacht.aankoopdatum)) {
+    this.isSaving = true;
+
+    if(this.klacht.MerkType.serienummerVerplicht && !this.klacht.serienummer){
+      this.popup.open("Vul een serienummer in!" ,null,  {
+        duration: 1500,
+      })  
+    }
+
+   else if(!moment.isDate(this.klacht.aankoopdatum)) {
     this.popup.open("Controleer het formaat van de aankoopdatum!" ,null,  {
       duration: 1500,
     })  
@@ -204,6 +215,7 @@ export class AddKlachtComponent implements OnInit {
 
      
     }
+    this.isSaving = false;
   }
 
   emailKlant(klacht, klant){

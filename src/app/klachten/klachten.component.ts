@@ -8,6 +8,7 @@ import {map, startWith, filter} from 'rxjs/operators';
 import  * as moment from 'moment';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-klachten',
@@ -31,7 +32,7 @@ import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
 })
 export class KlachtenComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
+  constructor(public router:Router ,public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
   klachten$: any;
   filter = "";
   status = 1;
@@ -40,6 +41,8 @@ export class KlachtenComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   context = this;
   klachtenArray: any[];
+  displayedColumns: string[] = ['status','Klachtennummer', 'Datum', 'Merknaam', 'Omschrijving','menu'];
+
 
   ngOnInit() {
   
@@ -113,6 +116,7 @@ export class KlachtenComponent implements OnInit {
   }
 
   changeOpgelost(event:Event, klacht){
+    console.log(klacht);
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -150,9 +154,21 @@ export class KlachtenComponent implements OnInit {
   }
 
   addKlachtDialog(){
-    const dialogRef = this.dialog.open(AddKlachtComponent);
+    const dialogRef = this.dialog.open(AddKlachtComponent, {
+      minWidth: '500px'
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
+
+  selectRow(row){
+      this.router.navigateByUrl('/details/'+row.klachtennummer)
+  }
+
+  openMenu(event:Event){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
 }

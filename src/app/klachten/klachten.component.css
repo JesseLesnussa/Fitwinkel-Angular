@@ -35,21 +35,6 @@ mat-card-subtitle button{
     margin-right: 15px;
 }
 
-#listKlachten{
-    flex-basis: 70%;
-    flex-grow: 1;
-    flex-shrink: 1;
-    background-color: pink !important;
-
-}
-
-#reports{
-    flex-basis: 30%;
-    flex-grow: 1;
-    flex-shrink: 1;
-    background-color: green !important;
-}
-
 
 #container{
     display: flex;
@@ -86,4 +71,36 @@ mat-spinner{
     order: 2;
     display: block;
     width: 100%;
+}
+
+
+.mat-elevation-z8{
+    box-shadow: none !important;
+}
+
+.leegOmschrijving
+{
+    color: lightgray;
+}
+
+.mat-row:hover{
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.mat-column-menu,
+.mat-column-status {
+  max-width: 30px;
+}
+
+.mat-column-Merknaam{
+    max-width: 200px;
+}
+.mat-column-Klachtennummer,
+.mat-column-Datum {
+  max-width: 150px;
+}
+
+mat-table{
+    text-align: center;
 }

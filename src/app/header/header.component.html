@@ -7,8 +7,8 @@
       </i>
       </a>
     </li>
-    <li matTooltip="Nieuwe klacht toevoegen" matTooltipPosition="right">
-      <a  routerLink="/toevoegen" [class.activated]="currentUrl == '/toevoegen' ">
+    <li (click)='openAddKlacht()' matTooltip="Nieuwe klacht toevoegen" matTooltipPosition="right">
+      <a [class.activated]="currentUrl == '/toevoegen' ">
         <i class="material-icons">playlist_add</i>
       </a>
     </li>

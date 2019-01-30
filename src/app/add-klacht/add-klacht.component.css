@@ -37,10 +37,21 @@ mat-card-subtitle button{
 }
 
 mat-form-field{
-    flex-grow: 1;
+    min-width: 97% !important;
 }
 
 mat-card
 {
     margin-right: 10px;
+}
+
+
+.addKlachtDialog{
+    background-color: pink !important;
+    color:green !important;
+}
+
+.addButton{
+    min-width: 100% !important;
+    margin: 3px 0px;
 }
