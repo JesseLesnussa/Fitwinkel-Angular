@@ -171,7 +171,9 @@
           <p mat-line> {{actie.datum | date}} </p>
         </mat-list-item>
       </mat-list>
-
+      <mat-card-actions>
+        <button (click)='actieToevoegen()' mat-raised-button color="primary">Actie toevoegen</button>
+      </mat-card-actions>
     </mat-card >
     <mat-card class="acties"> 
       <mat-card-subtitle>

@@ -22,10 +22,10 @@
                 --
               </mat-option>
               <mat-option [value]="1">
-                Open
+                Openstaand
               </mat-option>
               <mat-option [value]="0">
-                Opgelost
+                Afgerond
               </mat-option>
             </mat-select>
             <br>
@@ -89,7 +89,7 @@
         <ng-container matColumnDef="mailKlant">
           <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
           <mat-cell *matCellDef="let element"> 
-              <button mat-mini-fab 
+              <button [disabled]="!element.mailKlant" mat-mini-fab 
               matTooltip="Klant is op de hoogte gesteld!" matTooltipPosition="above" >
                   <mat-icon>email</mat-icon>
                 </button>
@@ -99,8 +99,8 @@
         <ng-container matColumnDef="klachtIngediend">
             <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
             <mat-cell *matCellDef="let element"> 
-                <button mat-mini-fab disabled
-                matTooltip="Klacht is nog niet ingediend bij de leverancier" matTooltipPosition="above" >
+                <button mat-mini-fab [disabled]="!element.klachtIngediend"
+                matTooltip="Klacht is ingediend bij de leverancier!" matTooltipPosition="above" >
                     <mat-icon>assignment</mat-icon>
                   </button>
             </mat-cell>
@@ -109,8 +109,8 @@
           <ng-container matColumnDef="omgeruild">
               <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
               <mat-cell *matCellDef="let element"> 
-                  <button mat-mini-fab disabled
-                  matTooltip="Product is nog niet omgeruild" matTooltipPosition="above" >
+                  <button mat-mini-fab [disabled]="!element.omgeruild"
+                  matTooltip="Product is omgeruild!" matTooltipPosition="above" >
                       <mat-icon>swap_horiz</mat-icon>
                     </button>
               </mat-cell>

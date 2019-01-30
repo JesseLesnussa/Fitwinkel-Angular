@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {KlachtTableComponent } from '../klacht-table/klacht-table.component'
 import * as moment from 'moment'
+import { AddActieComponent } from '../add-actie/add-actie.component';
 
 @Component({
   selector: 'app-klachten-details',
@@ -97,6 +98,16 @@ export class KlachtenDetailsComponent implements OnInit {
 
       )
 
+  }
+  actieToevoegen(){
+    const dialogRef = this.dialog.open(AddActieComponent,
+      {
+        data: {id: this.klacht$.klachtennummer, merknaam: this.merk$.merknaam, medewerkers: this.medewerkers}
+      }
+      );
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) this.acties$.push(result);
+    })
   }
 
   addActie(){
