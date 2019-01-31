@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Vervolgacties</h1>
+<div mat-dialog-content>
+De klacht is succesvol geregistreerd! <br> De volgende acties kunnen op dit moment worden verricht:
+  <div class='acties'>
+      <button (click)="emailLeverancier()" mat-raised-button color="primary">
+          <i class="material-icons">
+              assignment
+          </i>
+        Dien klacht in bij {{merk.merknaam}}
+      </button> <br>
+  
+      <button (click)="emailLeverancier()" mat-raised-button color="primary">
+          <i class="material-icons">
+              email
+          </i>
+        Verstuur bevestiging garantie aanvraag naar klant
+      </button> <br>     
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+  <button (click)='back()' mat-button>Terug</button>
+</mat-dialog-actions>

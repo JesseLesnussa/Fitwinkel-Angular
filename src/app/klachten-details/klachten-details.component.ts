@@ -10,6 +10,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {KlachtTableComponent } from '../klacht-table/klacht-table.component'
 import * as moment from 'moment'
 import { AddActieComponent } from '../add-actie/add-actie.component';
+import { KlachtVervolgComponent } from '../klacht-vervolg/klacht-vervolg.component';
 
 @Component({
   selector: 'app-klachten-details',
@@ -102,9 +103,13 @@ export class KlachtenDetailsComponent implements OnInit {
   actieToevoegen(){
     const dialogRef = this.dialog.open(AddActieComponent,
       {
-        data: {id: this.klacht$.klachtennummer, merknaam: this.merk$.merknaam, medewerkers: this.medewerkers}
-      }
-      );
+        data: 
+            {
+              merknaam: this.merk$.merknaam, 
+              medewerkers: this.medewerkers,
+              klacht: this.klacht$
+            }
+      });
     dialogRef.afterClosed().subscribe(result => {
       if(result) this.acties$.push(result);
     })
@@ -184,5 +189,25 @@ export class KlachtenDetailsComponent implements OnInit {
         setTimeout(()=> this.router.navigate(['/']) , 1000)
       })
     }
+  }
+
+  updateChecklist(){
+    this.data.updateChecklist(this.klacht$).subscribe(data => {
+      this.popup.open("Checklist is geüpdatet!" ,null,  {
+        duration: 1500,
+      })  
+    })
+  }
+
+  openVervolg(){
+     this.dialog.open(KlachtVervolgComponent,
+        {
+          data: {
+            klacht: this.klacht$,
+            merk: this.merk$
+          },
+          minWidth: '600px'
+        }
+      )
   }
 }

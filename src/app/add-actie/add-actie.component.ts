@@ -11,16 +11,16 @@ import { Actie } from '../actie';
 })
 export class AddActieComponent implements OnInit {
   
-  id:any;
   merknaam: any;
   medewerkers: any;
+  klacht: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private popup:MatSnackBar,
   private msSQLService: MsSQLService, public dialogRef: MatDialogRef<KlachtenDetailsComponent>) 
   { 
-    this.id = data.id;
     this.merknaam = data.merknaam;
     this.medewerkers = data.medewerkers;
+    this.klacht = data.klacht;
   }
 
 
@@ -45,7 +45,29 @@ export class AddActieComponent implements OnInit {
     }
     else
     {
-      this.actie.klachtennummer = this.id;
+      if(this.actie.actie == "E-mail verstuurd naar klant" 
+      || this.actie.actie == 'Klacht ingediend bij ' + this.merknaam  
+      || this.actie.actie == 'Product omgeruild' )
+      {
+        switch(this.actie.actie)
+        {
+          case "E-mail verstuurd naar klant":
+            this.klacht.mailKlant = true;
+            break;
+          case 'Klacht ingediend bij ' + this.merknaam:
+            this.klacht.klachtIngediend = true;
+            break;
+          case  'Product omgeruild':
+            this.klacht.omgeruild = true;
+            break;   
+        }
+        this.msSQLService.updateChecklist(this.klacht).subscribe(data => {
+          
+        })
+      }
+
+      
+      this.actie.klachtennummer = this.klacht.klachtennummer;
       this.actie.datum = Date();   
       this.msSQLService.addActie(this.actie).subscribe(data => 
         this.popup.open("Nieuwe actie toegevoegd!" ,null,  {

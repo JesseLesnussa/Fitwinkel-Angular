@@ -115,3 +115,7 @@ mat-table{
 .mat-row{
     min-height: 80px;
 }
+
+.mat-dialog-container {
+	will-change: transform, opacity;
+}

@@ -206,8 +206,8 @@ export class AddKlachtComponent implements OnInit {
               sb.onAction().subscribe(()=> this.emailKlant(data,klant));
               this.MsSQLService.addActie(actie).subscribe(acties => {
               })
-              setTimeout(()=> this.router.navigate(['/']) , 1000)
-              
+              this.dialogRef.close(data);
+                           
             })
             
 

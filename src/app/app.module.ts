@@ -21,6 +21,7 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { MedewerkerDetailComponent } from './medewerker-detail/medewerker-detail.component';
 import { KlachtTableComponent } from './klacht-table/klacht-table.component';
 import { AddActieComponent } from './add-actie/add-actie.component';
+import { KlachtVervolgComponent } from './klacht-vervolg/klacht-vervolg.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AddActieComponent } from './add-actie/add-actie.component';
     ReportingComponent,
     MedewerkerDetailComponent,
     KlachtTableComponent,
-    AddActieComponent
+    AddActieComponent,
+    KlachtVervolgComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { AddActieComponent } from './add-actie/add-actie.component';
     MaterialModule,
     MomentModule
   ],
-  entryComponents: [KlachtTableComponent,AddKlachtComponent, AddActieComponent],
+  entryComponents: [KlachtTableComponent,AddKlachtComponent, AddActieComponent, KlachtVervolgComponent],
   providers: [MsSQLService, HttpClient],
   bootstrap: [AppComponent]
 })

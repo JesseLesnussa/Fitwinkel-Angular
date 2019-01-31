@@ -9,6 +9,7 @@ import  * as moment from 'moment';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
 import { Router } from '@angular/router';
+import { KlachtVervolgComponent } from '../klacht-vervolg/klacht-vervolg.component';
 
 @Component({
   selector: 'app-klachten',
@@ -34,6 +35,7 @@ export class KlachtenComponent implements OnInit {
 
   constructor(public router:Router ,public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
   klachten$: any;
+  allKlachten: any;
   filter = "";
   status = 1;
   options: string[];
@@ -50,6 +52,7 @@ export class KlachtenComponent implements OnInit {
     this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
       data => {
         this.klachten$ = data;
+        this.allKlachten = data;
       } 
     )
     this.MsSQLService.getMerken().subscribe(
@@ -72,22 +75,31 @@ export class KlachtenComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
+  /*  this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
       data => {
         this.klachten$ = data;
         let tempData:any = data;
         
         this.klachtenArray = tempData;
       } 
-    )
+    )*/
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  //Filter klachten functie
   filterKlachten(e:any){
+    console.log("filter function")
     if(this.status != undefined){
-      this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
+      //All klachten
+      console.log("alle klachten",  this.allKlachten)
+      console.log("")
+      /*this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
         data => this.klachten$ = data
-      )
+      ) */
+      this.klachten$ = this.allKlachten.filter(row =>{
+         return row.merknaam.toLowerCase().includes(this.filter.toLowerCase())
+      })
+      console.log('filtered', this.klachten$)
      }
      else
      {
@@ -161,7 +173,15 @@ export class KlachtenComponent implements OnInit {
       minWidth: '700px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result){
+        this.klachten$.push(result)
+        const dialogVervolg = this.dialog.open(KlachtVervolgComponent,
+          {
+            data:{
+              klacht: result
+            }
+          })
+      }
     });
   }
 

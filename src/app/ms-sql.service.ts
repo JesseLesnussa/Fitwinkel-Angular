@@ -27,7 +27,7 @@ export class MsSQLService {
   }
 
   getKlachten(){
-    
+    console.log("api getklachten")
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten/")
   }
 
@@ -75,7 +75,7 @@ export class MsSQLService {
   }
 
   getKlachtByFilter(merk,status){
-
+    console.log("api getklachtenbyfilter")
     let url = "https://fitwinkel.azurewebsites.net/api/klachten";
   if(!merk && status == null) url = url
   else if (merk != null && status == null)  url = "https://fitwinkel.azurewebsites.net/api/klachten?merknaam=" + merk 
@@ -94,6 +94,10 @@ export class MsSQLService {
     //Klant object mappen naar de volle JSON-object. Één laag omlaag 
     
     return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/", klacht);
+  }
+
+  updateChecklist(klacht){
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/updateChecklist", klacht);
   }
 
   updateKlacht(klacht){   
