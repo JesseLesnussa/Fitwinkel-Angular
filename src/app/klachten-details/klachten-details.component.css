@@ -21,29 +21,31 @@ mat-card-subtitle button{
 }
 
 #klacht{
- 
+    flex-grow: 1;
     flex-basis: 45%;
     order:1;
+    margin: 5px;
 }
 
 #klant{
- 
+    flex-grow: 1;
     flex-basis: 45%;
     order:2;
+    margin: 5px;
 }
 
 .acties{
     flex-basis: 40%;
     order:3;
     flex-grow: 1;
-
+    margin: 5px;
 }
 
 .checklist{
     flex-basis: 40%;
     order:4;
     flex-grow: 1;
- 
+    margin: 5px;
 }
 
 #header{

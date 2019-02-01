@@ -165,7 +165,7 @@ export class KlachtenComponent implements OnInit {
 
   addKlachtDialog(){
     const dialogRef = this.dialog.open(AddKlachtComponent, {
-      minWidth: '700px'
+      maxWidth: '700px'
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){

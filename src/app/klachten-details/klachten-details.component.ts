@@ -210,4 +210,8 @@ export class KlachtenDetailsComponent implements OnInit {
         }
       )
   }
+
+  updateKlacht(){
+    this.data.updateKlachtGegevens(this.klacht$);
+  }
 }

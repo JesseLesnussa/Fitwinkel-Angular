@@ -118,8 +118,6 @@ export class AddKlachtComponent implements OnInit {
         );
        }
     )
-
-
   }
  
 
@@ -135,9 +133,7 @@ export class AddKlachtComponent implements OnInit {
     this.filteredMerk = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterMerk(value))
-    );
-
-    
+    );   
   }
 
   private _filterKlant(value: string): string[] {
@@ -197,7 +193,7 @@ export class AddKlachtComponent implements OnInit {
               "klantnaam": "",
               "datum": moment(new Date()).format("YYYY-MM-DD"),
               "klachtennummer": newKlacht.klachtennummer,
-              "id": 0,
+              "id": 0, 
               "merk": "",
               "actie": "Klacht aangemaakt"  
             }
@@ -210,8 +206,7 @@ export class AddKlachtComponent implements OnInit {
               sb.onAction().subscribe(()=> this.emailKlant(data,klant));
               this.MsSQLService.addActie(actie).subscribe(acties => {
               })
-              this.dialogRef.close(this.klacht);
-                           
+              this.dialogRef.close(this.klacht);                         
             })
             
 

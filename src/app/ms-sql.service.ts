@@ -135,4 +135,7 @@ export class MsSQLService {
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/medewerkers/"+id)
   }
 
+  updateKlachtGegevens(klacht){
+    
+  }
 }

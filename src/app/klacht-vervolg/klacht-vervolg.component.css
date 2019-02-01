@@ -1,6 +1,18 @@
 .acties button
 {
-    min-width: 100%;
-    margin: 5px 0px;
+    min-width: 99%;
+    margin: 5px 3px;
+}
+
+.icons
+{
+    margin:auto;
+    padding: 30px;
+    padding-left: 42%;
+}
+
+.icons button
+{
+    margin-right: 5px;
 }
 

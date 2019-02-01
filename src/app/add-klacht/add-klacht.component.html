@@ -5,9 +5,6 @@
     <mat-divider></mat-divider>
     <br>
 
-    
-  {{klacht | json}}
-
     <mat-form-field *ngIf='!loadingKlanten; else loadingKlantenTemp' color="accent">
         <mat-select   [(ngModel)]="klacht.klant"    placeholder="Klant" required>
           <mat-option   *ngFor='let klant of klanten$' [value]="klant"> {{klant.voornaam}} | {{klant.email}} </mat-option>
@@ -80,6 +77,6 @@
               <mat-progress-bar *ngIf='isSaving' mode="buffer"></mat-progress-bar>
               <br>
 
-              <button class='addButton'  mat-raised-button (click)="sluiten()">Terug</button>
+              <button class='addButton'  mat-button (click)="sluiten()">Terug</button>
               <!--button mat-button (click)="copy()">Copy tabel</button-->
             </div>
