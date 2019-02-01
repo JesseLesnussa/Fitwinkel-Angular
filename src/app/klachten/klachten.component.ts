@@ -33,11 +33,13 @@ import { KlachtVervolgComponent } from '../klacht-vervolg/klacht-vervolg.compone
 })
 export class KlachtenComponent implements OnInit {
 
-  constructor(public router:Router ,public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
+  constructor(public router:Router ,public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) {
+    
+   }
   klachten$: any;
   allKlachten: any;
   filter = "";
-  status = 1;
+  status = true;
   options: string[];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
@@ -49,10 +51,10 @@ export class KlachtenComponent implements OnInit {
 
   ngOnInit() {
   
-    this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
+    this.MsSQLService.getKlachten().subscribe(
       data => {
-        this.klachten$ = data;
         this.allKlachten = data;
+        this.klachten$ = this.allKlachten.filter(row => { return row.s == true})
       } 
     )
     this.MsSQLService.getMerken().subscribe(
@@ -88,24 +90,19 @@ export class KlachtenComponent implements OnInit {
 
   //Filter klachten functie
   filterKlachten(e:any){
-    console.log("filter function")
+
     if(this.status != undefined){
       //All klachten
-      console.log("alle klachten",  this.allKlachten)
-      console.log("")
-      /*this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
-        data => this.klachten$ = data
-      ) */
       this.klachten$ = this.allKlachten.filter(row =>{
-         return row.merknaam.toLowerCase().includes(this.filter.toLowerCase())
+         return row.merknaam.toLowerCase().includes(this.filter.toLowerCase()) && row.s == this.status
       })
-      console.log('filtered', this.klachten$)
+
      }
      else
      {
-      this.MsSQLService.getKlachten().subscribe(
-        data => this.klachten$ = data
-      ) 
+      this.klachten$ = this.allKlachten.filter(row =>{
+        return row.merknaam.toLowerCase().includes(this.filter.toLowerCase())
+     })
      }
     
   }
@@ -129,17 +126,15 @@ export class KlachtenComponent implements OnInit {
   }
 
   changeOpgelost(event:Event, klacht, menu){
-    console.log(menu);
-    console.log(klacht);
-    console.log(event);
+
     event.preventDefault();
     event.stopImmediatePropagation();
 
     let currentS = klacht.s
-    if(klacht.s == 1) klacht.s = 0
-    else klacht.s = 1
+    if(klacht.s == true) klacht.s = false
+    else klacht.s = true
 
-    if(!this.status) this.status = 1
+    if(!this.status) this.status = true
     else this.status = currentS
     this.MsSQLService.updateKlacht(klacht).subscribe(data => {
       this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(

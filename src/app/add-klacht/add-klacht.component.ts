@@ -69,6 +69,7 @@ export class AddKlachtComponent implements OnInit {
   constructor(  public dialogRef: MatDialogRef<KlachtenComponent>, private router:Router, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { 
     this.MsSQLService.getKlanten().subscribe(
       data => {
+        this.loadingKlanten = false;
         this.klanten$ = data
         var namen:string[] = [];
         var tempData:any = data;
@@ -200,13 +201,16 @@ export class AddKlachtComponent implements OnInit {
               "merk": "",
               "actie": "Klacht aangemaakt"  
             }
+
+            this.klacht.klachtennummer = newKlacht.klachtennummer;
+            this.klacht.merknaam = this.klacht.MerkType.merknaam;
             
             this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
               let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur bevestiging garantie-aanvraag", {duration:30000});
               sb.onAction().subscribe(()=> this.emailKlant(data,klant));
               this.MsSQLService.addActie(actie).subscribe(acties => {
               })
-              this.dialogRef.close(data);
+              this.dialogRef.close(this.klacht);
                            
             })
             

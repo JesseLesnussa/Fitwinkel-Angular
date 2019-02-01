@@ -6,7 +6,7 @@
     <br>
 
     
-
+  {{klacht | json}}
 
     <mat-form-field *ngIf='!loadingKlanten; else loadingKlantenTemp' color="accent">
         <mat-select   [(ngModel)]="klacht.klant"    placeholder="Klant" required>

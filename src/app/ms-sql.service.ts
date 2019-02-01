@@ -27,7 +27,6 @@ export class MsSQLService {
   }
 
   getKlachten(){
-    console.log("api getklachten")
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten/")
   }
 
@@ -75,7 +74,7 @@ export class MsSQLService {
   }
 
   getKlachtByFilter(merk,status){
-    console.log("api getklachtenbyfilter")
+
     let url = "https://fitwinkel.azurewebsites.net/api/klachten";
   if(!merk && status == null) url = url
   else if (merk != null && status == null)  url = "https://fitwinkel.azurewebsites.net/api/klachten?merknaam=" + merk 
@@ -106,11 +105,15 @@ export class MsSQLService {
 
 
   getKlanten(){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+    //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
+
   }
   getKlant(id){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
-  }
+  //  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
+  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
+  
+}
 
   deleteKlant(klant){
     return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/relaties/" + klant.id) 
