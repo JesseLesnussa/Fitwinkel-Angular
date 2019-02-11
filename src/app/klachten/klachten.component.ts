@@ -127,8 +127,7 @@ export class KlachtenComponent implements OnInit {
 
   changeOpgelost(event:Event, klacht, menu){
 
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    this.preventEvent(event);
 
     let currentS = klacht.s
     if(klacht.s == true) klacht.s = false
@@ -149,9 +148,7 @@ export class KlachtenComponent implements OnInit {
   }
 
   deleteKlacht(event:Event, klacht){
-    //
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    this.preventEvent(event);
     if(confirm("Weet je zeker dat je de klacht wilt verwijderen?")){
       this.MsSQLService.deleteKlacht(klacht).subscribe(data => {
         var index = this.klachten$.map(x => {
@@ -191,6 +188,10 @@ export class KlachtenComponent implements OnInit {
   }
 
   openMenu(event:Event){
+    this.preventEvent(event);
+  }
+
+  preventEvent(event:Event){
     event.preventDefault();
     event.stopImmediatePropagation();
   }

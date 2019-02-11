@@ -105,13 +105,13 @@ export class MsSQLService {
 
 
   getKlanten(){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
-    //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
+  //  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
 
   }
   getKlant(id){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
-  //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
+  //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
+  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
   
 }
 

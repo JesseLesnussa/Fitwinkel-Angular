@@ -168,13 +168,8 @@ export class KlachtenDetailsComponent implements OnInit {
   }
 
   emailLeverancier(klacht, klant, merk){
-    const dialogRef = this.dialog.open(KlachtTableComponent,{
+    this.dialog.open(KlachtTableComponent,{
       data: {klacht: klacht, klant: klant, merk:merk}
-    });
-
-    
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
 
   }
