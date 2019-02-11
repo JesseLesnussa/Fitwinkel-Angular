@@ -19,12 +19,15 @@
     <mat-list>
         <mat-spinner *ngIf='!merken$'></mat-spinner>
         <mat-list-item *ngFor='let merk of merken$'>
+            <button [disabled]="!merk.id"  (click)='editMerk(merk)' mat-icon-button>
+                <i class="material-icons">edit</i>
+              </button>
             <button [disabled]="!merk.id"  (click)='deleteMerk(merk)' mat-icon-button>
                 <i class="material-icons">delete</i>
               </button>
           <h4 mat-line> {{merk.merknaam}}   </h4>
           <p mat-line>{{merk.email}}</p>
-          <p mat-line *ngIf="merk.serienummerVerplicht == 1"> Serienummer is verplicht </p>
+          <p mat-line *ngIf="merk.serienummerVerplicht"> Serienummer is verplicht </p>
         </mat-list-item>
       </mat-list>
   
@@ -47,8 +50,8 @@
           <input [(ngModel)]="newMerk.email"  matInput placeholder="Email">
         </mat-form-field>
       <mat-radio-group required [(ngModel)]="newMerk.serienummerVerplicht" class="example-radio-group">
-        <mat-radio-button  selected  class="example-radio-button" value=1 >Serienummer verplicht</mat-radio-button>
-        <mat-radio-button  class="example-radio-button" value=0 >Serienummer niet verplicht</mat-radio-button>
+        <mat-radio-button  selected  class="example-radio-button" value=true >Serienummer verplicht</mat-radio-button>
+        <mat-radio-button  class="example-radio-button" value=false >Serienummer niet verplicht</mat-radio-button>
       </mat-radio-group>
                  <button (click)="addMerk()" mat-raised-button color="primary"> Toevoegen</button>
 </mat-card>

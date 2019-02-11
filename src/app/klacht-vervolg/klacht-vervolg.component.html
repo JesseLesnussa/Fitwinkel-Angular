@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Vervolgacties</h1>
 <div mat-dialog-content>
-De klacht is succesvol geregistreerd! <br> De volgende acties kunnen op dit moment worden verricht<br>
+Klacht is succesvol geregistreerd onder klachtennummer {{klacht.klachtennummer}}! <br> De volgende acties kunnen op dit moment worden verricht<br>
   <div class='icons'>
       <button [disabled]="!klacht.mailKlant" mat-mini-fab 
       matTooltip="Klant is op de hoogte gesteld!" matTooltipPosition="above" >
@@ -29,6 +29,7 @@ De klacht is succesvol geregistreerd! <br> De volgende acties kunnen op dit mome
 </div>
 
 <mat-dialog-actions align="end">
-  <button (click)='back()' mat-button>Terug</button>
+    <button (click)='bekijkKlacht()' mat-button>Bekijk klacht {{klacht.klachtennummer}}</button>
+    <button (click)='back()' mat-button>Terug</button>
 </mat-dialog-actions>
 

@@ -49,7 +49,7 @@ export class MsSQLService {
   getActies(id){
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/acties/"+id)
   }
-
+  
   addActie(actie){
     return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/acties/", actie);
   }
@@ -105,13 +105,13 @@ export class MsSQLService {
 
 
   getKlanten(){
-    //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+    //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
 
   }
   getKlant(id){
-  //  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
-  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
+  //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
   
 }
 
@@ -136,6 +136,11 @@ export class MsSQLService {
   }
 
   updateKlachtGegevens(klacht){
-    
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/updateKlachtgegevens", klacht);   
+  }
+
+  updateMerk(merk){
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/merken/update", merk);
   }
 }
+

@@ -11,6 +11,7 @@ import {KlachtTableComponent } from '../klacht-table/klacht-table.component'
 import * as moment from 'moment'
 import { AddActieComponent } from '../add-actie/add-actie.component';
 import { KlachtVervolgComponent } from '../klacht-vervolg/klacht-vervolg.component';
+import { BevestigComponent } from '../bevestig/bevestig.component';
 
 @Component({
   selector: 'app-klachten-details',
@@ -25,12 +26,14 @@ export class KlachtenDetailsComponent implements OnInit {
   }
   id$: number;
   klacht$: any;
+  klachtRef: any;
   acties$: any;
   medewerkers: any;
   medewerker$: any;
   klant$: any;
   merk$: any;
- 
+  editMode: boolean = false;
+
 
 
   actie: Actie = {
@@ -42,10 +45,11 @@ export class KlachtenDetailsComponent implements OnInit {
     "actie": ""
   }
 
-  ngOnInit() {
+  ngOnInit() {  
     this.data.getDetailsKlacht(this.id$).subscribe(
       data => { 
         this.klacht$ = data;
+
         this.data.getKlant(this.klacht$.klantId).subscribe(klantData => {
           this.klant$ = klantData;
         })
@@ -147,6 +151,20 @@ export class KlachtenDetailsComponent implements OnInit {
   emailKlant(klacht, klant){
     location.href = "mailto:" + klant.email + "?subject=Garantie-aanvraag | Meldingsnummer " + klacht.klachtennummer + 
     "&body=Geachte heer/mevrouw " + klant.voornaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
+    setTimeout(function()
+    {
+      const dialogRef = this.dialog.open(BevestigComponent, {
+        data: {title: 'Garantie bevestiging klant', message:'Heeft u de bevestiging ingediend bij ' + this.klant.voornaam + '?'}
+      })
+      
+      dialogRef.afterClosed().subscribe(result =>{
+        if(result)
+        {
+          this.klacht.mailKlant = true;
+          this.updateChecklist(this.klacht);
+        }
+      })
+    }, 1000)
   }
 
   emailLeverancier(klacht, klant, merk){
@@ -213,5 +231,26 @@ export class KlachtenDetailsComponent implements OnInit {
 
   updateKlacht(){
     this.data.updateKlachtGegevens(this.klacht$);
+  }
+
+  switchEditMode(){
+   this.editMode = !this.editMode;
+  }
+
+  saveEdit(){
+    this.data.updateKlachtGegevens(this.klacht$).subscribe(data =>{
+      this.popup.open("Klacht is geüpdatet!" ,null,  {
+        duration: 1500,
+      })  
+    })
+    this.switchEditMode();
+  }
+
+  annuleerEdit(){
+    console.log(this.klachtRef);
+    this.data.getDetailsKlacht(this.id$).subscribe(data => {
+      this.klacht$ = data;
+      this.switchEditMode();
+    })  
   }
 }

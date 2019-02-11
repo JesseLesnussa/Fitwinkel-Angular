@@ -29,24 +29,29 @@
             </mat-form-field>      
            <br>
            <mat-form-field>
-              <input disabled [(ngModel)]="klacht$.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
+              <input [disabled]='!editMode' maxlength="200" [(ngModel)]="klacht$.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
+              <mat-hint *ngIf='editMode'>{{klacht$.klachtenomschrijving.length}} / 200</mat-hint>   
             </mat-form-field>
             <br>
            <mat-form-field *ngIf="merk$">
               <input disabled [(ngModel)]="merk$.merknaam" matInput placeholder="Merk">
             </mat-form-field>     
             <br> 
-            <button (click)="emailLeverancier(klacht$,klant$,merk$)" mat-raised-button color="warn">
-                <i class="material-icons">
-                    assignment
-                </i>
-              Genereer een formulier</button>
+            <button (click)="emailLeverancier(klacht$,klant$,merk$)" mat-raised-button color="primary">
+
+              Genereer een formulier
+              <i class="material-icons">
+                assignment
+            </i>
+            </button>
               <a target="_blank" href='https://www.flowsportsgroup.com/customer/account/login/'>
-              <button  *ngIf='merk$.merknaam == "Flow Fitness" ' mat-raised-button color="warn">
-                  <i class="material-icons">
-                      send
-                  </i>
-                Website van Flow Fitness</button>
+              <button  *ngIf='merk$.merknaam == "Flow Fitness" ' mat-raised-button color="primary">
+
+                Website van Flow Fitness
+                <i class="material-icons">
+                  send
+              </i>
+              </button>
               </a>
              <br> 
             <br>
@@ -55,51 +60,80 @@
               </mat-form-field>
               <br>
               <mat-form-field>
-                <input disabled [(ngModel)]="klacht$.productNaam" matInput placeholder="Naam product">
+                <input [disabled]='!editMode' maxlength="50" [(ngModel)]="klacht$.productNaam" matInput placeholder="Naam product">
+                <mat-hint *ngIf='editMode'>{{klacht$.productNaam.length}} / 50</mat-hint>   
               </mat-form-field>   
               <br>
               <mat-form-field>
-                <input disabled [(ngModel)]="klacht$.productNummer" matInput placeholder="Productnummer">
+                <input [disabled]='!editMode' maxlength="50" [(ngModel)]="klacht$.productNummer" matInput placeholder="Productnummer">
+                <mat-hint *ngIf='editMode'>{{klacht$.productNummer.length}} / 50</mat-hint>                 
               </mat-form-field>   
               <br>
               <mat-form-field>
-                <input disabled [(ngModel)]="klacht$.serienummer" matInput placeholder="Serienummer">
+                <input [disabled]='!editMode' maxlength="50" [(ngModel)]="klacht$.serienummer" matInput placeholder="Serienummer">
+                <mat-hint *ngIf='editMode'>{{klacht$.serienummer.length}} / 50</mat-hint>   
               </mat-form-field>  
               <br>
               <mat-form-field>
-                <input disabled [(ngModel)]="klacht$.defectonderdeel" matInput placeholder="Defect Onderdeel">
+                <input [disabled]='!editMode' maxlength="50" [(ngModel)]="klacht$.defectonderdeel" matInput placeholder="Defect Onderdeel">
+                <mat-hint *ngIf='editMode'>{{klacht$.defectonderdeel.length}} / 50</mat-hint>   
               </mat-form-field>  
               <br>
               <mat-form-field>
-                <input disabled [(ngModel)]="klacht$.ordernummer" matInput placeholder="Ordernummer">
+                <input [disabled]='!editMode' maxlength="50" [(ngModel)]="klacht$.ordernummer" matInput placeholder="Ordernummer">
+                <mat-hint *ngIf='editMode'>{{klacht$.ordernummer.length}} / 50</mat-hint>   
               </mat-form-field>  
               <br> 
   
               <br> 
-              <span *ngIf="klacht$.s==1;else isOpgelost"> 
+
+              <div *ngIf='!editMode'>
+                  <span *ngIf="klacht$.s==1;else isOpgelost"> 
                   
-                <button (click)='changeOpgelost(klacht$)' mat-raised-button color="warn">
-                  Open
+                      <button (click)='changeOpgelost(klacht$)' mat-raised-button color="warn">
+                        Open
+                            <i class="material-icons">
+                                autorenew
+                            </i>    
+                          </button>      
+                
+                      </span>    
+                    <ng-template #isOpgelost> 
+                        <button (click)='changeOpgelost(klacht$)' mat-raised-button color="primary">
+                          Opgelost 
+                            <i class="material-icons">
+                                autorenew
+                            </i>    
+                          </button>    
+                    </ng-template> 
+                  <button color='accent' mat-raised-button (click)='switchEditMode()'>
+                      Wijzig klacht
                       <i class="material-icons">
-                          autorenew
-                      </i>    
-                    </button>      
-          
-                </span>    
-              <ng-template #isOpgelost> 
-                  <button (click)='changeOpgelost(klacht$)' mat-raised-button color="primary">
-                    Opgelost 
+                        edit
+                      </i>
+                    </button>
+                  <button mat-button (click)='deleteKlacht()'>
+                    Klacht verwijderen
+                    <i class="material-icons">
+                      delete
+                    </i>
+                  </button>
+              </div>
+              <div *ngIf='editMode'>
+                  <button color='primary' mat-raised-button (click)='saveEdit()'>
+                      Wijziging opslaan
                       <i class="material-icons">
-                          autorenew
-                      </i>    
-                    </button>    
-              </ng-template> 
-              <button mat-raised-button (click)='deleteKlacht()'>
-                Verwijder klacht
-                <i class="material-icons">
-                  delete
-                </i>
-              </button>
+                        check
+                      </i>
+                    </button>
+                  <button mat-button (click)='annuleerEdit()'>
+                    Annuleren
+                    <i class="material-icons">
+                      delete
+                    </i>
+                  </button>
+              </div>
+
               <br>
     </mat-card-content>
   </mat-card>
@@ -115,7 +149,7 @@
       Klant</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
-  <mat-card-content  >
+  <mat-card-content >
       <br>
           <mat-form-field>
               <input disabled [(ngModel)]="klant$.voornaam" matInput placeholder="Klantnaam">

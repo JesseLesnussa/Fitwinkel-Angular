@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MsSQLService } from '../ms-sql.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { EditMerkComponent } from '../edit-merk/edit-merk.component';
 
 @Component({
   selector: 'app-merken',
@@ -9,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class MerkenComponent implements OnInit {
 
-  constructor(private MsSQLService: MsSQLService, private popup:MatSnackBar) { }
+  constructor(private dialog:MatDialog, private MsSQLService: MsSQLService, private popup:MatSnackBar) { }
 
   merken$: any;
   newMerk = {
@@ -53,4 +54,21 @@ export class MerkenComponent implements OnInit {
         this.merken$.splice(index, 1)
       }
   }
+
+  editMerk(merk){
+  const dialogRef = this.dialog.open(EditMerkComponent, {
+      data: {merk:merk}
+    })
+  dialogRef.afterClosed().subscribe(result =>
+    {
+      this.MsSQLService.getMerken().subscribe(
+        data => this.merken$ = data
+      )
+      if(result){
+        this.popup.open("Merk is geüpdatet!", null, {duration:1500})
+      }
+    })
+  }
+  
 }
+

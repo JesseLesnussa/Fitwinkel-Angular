@@ -153,8 +153,6 @@ export class AddKlachtComponent implements OnInit {
   }
 
   addKlacht(){
-    this.isSaving = true;
-    console.log(this.klacht.serienummer.trim().length)
     if(this.klacht.MerkType.serienummerVerplicht && !this.klacht.serienummer && this.klacht.serienummer.trim().length < 1){
       this.popup.open("Vul een serienummer in!" ,null,  {
         duration: 1500,
@@ -185,37 +183,37 @@ export class AddKlachtComponent implements OnInit {
       })  
     }
     else{
-      this.popup.open("Klacht wordt toegevoegd..." ,null)  
-      this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
-          {
-            let newKlacht:any = data;
-            let actie:Actie = {
-              "klantnaam": "",
-              "datum": moment(new Date()).format("YYYY-MM-DD"),
-              "klachtennummer": newKlacht.klachtennummer,
-              "id": 0, 
-              "merk": "",
-              "actie": "Klacht aangemaakt"  
+      this.isSaving = true;
+      this.popup.open("Klacht wordt toegevoegd..." ,null,{
+        duration: 1500,
+      })  
+ 
+          this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
+            {
+              let newKlacht:any = data;
+              let actie:Actie = {
+                "klantnaam": "",
+                "datum": moment(new Date()).format("YYYY-MM-DD"),
+                "klachtennummer": newKlacht.klachtennummer,
+                "id": 0, 
+                "merk": "",
+                "actie": "Klacht aangemaakt"  
+              }
+  
+              this.klacht.klachtennummer = newKlacht.klachtennummer;
+              this.klacht.merknaam = this.klacht.MerkType.merknaam;
+              
+                this.MsSQLService.addActie(actie).subscribe(acties => {
+                })
+                this.isSaving = false;
+                this.dialogRef.close(this.klacht);                         
+        
+                
             }
-
-            this.klacht.klachtennummer = newKlacht.klachtennummer;
-            this.klacht.merknaam = this.klacht.MerkType.merknaam;
-            
-            this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
-              let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur bevestiging garantie-aanvraag", {duration:30000});
-              sb.onAction().subscribe(()=> this.emailKlant(data,klant));
-              this.MsSQLService.addActie(actie).subscribe(acties => {
-              })
-              this.dialogRef.close(this.klacht);                         
-            })
-            
-
-          }
-      ); 
-
-     
+        ); 
+    
     }
-    this.isSaving = false;
+    
   }
 
   emailKlant(klacht, klant){

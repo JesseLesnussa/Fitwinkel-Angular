@@ -149,6 +149,7 @@ export class KlachtenComponent implements OnInit {
   }
 
   deleteKlacht(event:Event, klacht){
+    //
     event.preventDefault();
     event.stopImmediatePropagation();
     if(confirm("Weet je zeker dat je de klacht wilt verwijderen?")){
@@ -156,7 +157,9 @@ export class KlachtenComponent implements OnInit {
         var index = this.klachten$.map(x => {
           return x.klachtennummer;
         }).indexOf(klacht.klachtennummer);
+        console.log(index, this.klachten$);
         this.klachten$.splice(index, 1)
+        //API-call of optimistic-ui? 
         this.popup.open("Klacht " + klacht.klachtennummer + " is verwijderd", null, {duration:1500})
       })
     }
@@ -165,7 +168,7 @@ export class KlachtenComponent implements OnInit {
 
   addKlachtDialog(){
     const dialogRef = this.dialog.open(AddKlachtComponent, {
-      maxWidth: '700px'
+      minWidth: '700px'
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
@@ -175,6 +178,9 @@ export class KlachtenComponent implements OnInit {
             data:{
               klacht: result
             }
+          })
+          dialogVervolg.afterClosed().subscribe(result => {
+            if(result) this.router.navigateByUrl('/details/'+result)
           })
       }
     });

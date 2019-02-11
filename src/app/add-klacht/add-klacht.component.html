@@ -6,7 +6,7 @@
     <br>
 
     <mat-form-field *ngIf='!loadingKlanten; else loadingKlantenTemp' color="accent">
-        <mat-select   [(ngModel)]="klacht.klant"    placeholder="Klant" required>
+        <mat-select  [disabled]='isSaving'  [(ngModel)]="klacht.klant"    placeholder="Klant" required>
           <mat-option   *ngFor='let klant of klanten$' [value]="klant"> {{klant.voornaam}} | {{klant.email}} </mat-option>
         </mat-select>         
       </mat-form-field>
@@ -18,7 +18,7 @@
       </ng-template>
       
       <mat-form-field *ngIf='!loadingMerken; else loadingMerkenTemp' color="warn">
-         <mat-select  [(ngModel)]="klacht.MerkType"    placeholder="Merk *">
+         <mat-select [disabled]='isSaving'  [(ngModel)]="klacht.MerkType"    placeholder="Merk *">
           <mat-option required *ngFor='let merk of merken'  [value]="merk"> {{merk.merknaam}} </mat-option>
         </mat-select>     
 
@@ -30,53 +30,55 @@
       </ng-template>
       <br>
       <mat-form-field color="warn">
-        <input [(ngModel)]="klacht.productNaam" matInput placeholder="Naam product">
+        <input [disabled]='isSaving' maxlength="50" [(ngModel)]="klacht.productNaam" matInput placeholder="Naam product">
+        <mat-hint >{{klacht.productNaam.length}} / 50</mat-hint>
       </mat-form-field>
       <br>
       <mat-form-field color="warn">
-          <input [(ngModel)]="klacht.productNummer" matInput placeholder="Productnummer">
-          <mat-hint>Bijvoorbeeld PFEVEL95910</mat-hint>   
+          <input [disabled]='isSaving' maxlength="50" [(ngModel)]="klacht.productNummer" matInput placeholder="Productnummer (bijvoorbeeld PFEVEL95910)">
+          <mat-hint>{{klacht.productNummer.length}} / 50</mat-hint>   
         </mat-form-field>
       <br>
       <div *ngIf="klacht.MerkType.serienummerVerplicht ==  1">
         <mat-form-field color="warn" >
-          <input [(ngModel)]="klacht.serienummer" matInput placeholder="Serienummer *">
-          <mat-hint>Bijvoorbeeld N° Serie S24G03848</mat-hint>   
+          <input [disabled]='isSaving' maxlength="50" [(ngModel)]="klacht.serienummer" matInput placeholder="Serienummer (bijvoorbeeld N° Serie S24G03848)*">
+          <mat-hint>{{klacht.productNummer.length}} / 50</mat-hint>   
         </mat-form-field>
       </div>
     
       <mat-form-field color="warn">
-        <input [(ngModel)]="klacht.defectOnderdeel" matInput placeholder="Defect onderdeel">
-        <mat-hint>Bij defect onderdeel: onderdeelnaam en nummer (staat in de producthandleiding)</mat-hint>   
+        <input [disabled]='isSaving' maxlength="50" [(ngModel)]="klacht.defectOnderdeel" matInput placeholder="Bij defect onderdeel: onderdeelnaam en nummer (staat in de producthandleiding)">
+        <mat-hint>{{klacht.defectOnderdeel.length}} / 50</mat-hint>   
       </mat-form-field>
       <br>
       <mat-form-field color="warn">
-          <input [(ngModel)]="klacht.ordernummer" matInput placeholder="Ordernummer">
+          <input [disabled]='isSaving' maxlength="50" [(ngModel)]="klacht.ordernummer" matInput placeholder="Ordernummer">
+          <mat-hint>{{klacht.ordernummer.length}} / 50</mat-hint>   
         </mat-form-field>
         <br>
       <mat-form-field color="warn">
-          <input maxlength="200" [(ngModel)]="klacht.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
+          <input [disabled]='isSaving' maxlength="200" [(ngModel)]="klacht.klachtenomschrijving" matInput placeholder="Klachtenomschrijving">
           <mat-hint >{{klacht.klachtenomschrijving.length}} / 200</mat-hint>
         </mat-form-field>
         <br>
         <mat-form-field color="warn">
-            <input [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum *" >
+            <input [disabled]='isSaving' [(ngModel)]="klacht.aankoopdatum" matInput [matDatepicker]="Aankoopdatum" placeholder="Aankoopdatum *" >
             <mat-datepicker-toggle matSuffix [for]="Aankoopdatum"></mat-datepicker-toggle>
             <mat-datepicker touchUi #Aankoopdatum color="warn"></mat-datepicker>
             <mat-hint>dd/mm/yyyy</mat-hint>   
           </mat-form-field>
           <br>
           <mat-form-field color="warn">
-            <mat-select ng-disabled='isSaving' [(ngModel)]="klacht.medewerkerId"    placeholder="Medewerker" required>
+            <mat-select [disabled]='isSaving' [(ngModel)]="klacht.medewerkerId"    placeholder="Medewerker" required>
               <mat-option *ngFor='let mw of medewerkers' [value]="mw.medewerkerId"> {{mw.voornaam}} {{mw.achternaam}} </mat-option>
             </mat-select>         
           </mat-form-field>
 
           <div mat-dialog-actions>
-              <button class='addButton' (click)="addKlacht()" mat-raised-button color="primary"> Klacht registreren</button>
+              <button [disabled]='isSaving' class='addButton' (click)="addKlacht()" mat-raised-button color="primary"> Klacht registreren</button>
               <mat-progress-bar *ngIf='isSaving' mode="buffer"></mat-progress-bar>
               <br>
 
-              <button class='addButton'  mat-button (click)="sluiten()">Terug</button>
+              <button [disabled]='isSaving' class='addButton'  mat-button (click)="sluiten()">Terug</button>
               <!--button mat-button (click)="copy()">Copy tabel</button-->
             </div>
