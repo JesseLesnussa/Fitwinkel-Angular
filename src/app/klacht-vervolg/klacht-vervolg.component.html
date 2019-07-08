@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Vervolgacties</h1>
+<div mat-dialog-content>
+Klacht is succesvol geregistreerd onder klachtennummer {{klacht.klachtennummer}}! <br> De volgende acties kunnen op dit moment worden verricht<br>
+  <div class='icons'>
+      <button [disabled]="!klacht.mailKlant" mat-mini-fab 
+      matTooltip="Klant is op de hoogte gesteld!" matTooltipPosition="above" >
+          <mat-icon>email</mat-icon>
+        </button>
+        <button mat-mini-fab [disabled]="!klacht.klachtIngediend"
+        matTooltip="Klacht is ingediend bij de leverancier!" matTooltipPosition="above" >
+            <mat-icon>assignment</mat-icon>
+          </button>
+  </div>
+        
+  <div class='acties'> 
+      <button (click)="emailKlant()" mat-raised-button color="primary" *ngIf='klant'>
+          <i class="material-icons">
+              email
+          </i>
+        Verstuur bevestiging garantie aanvraag naar {{klant.voornaam}}
+      </button> <br>  
+      <button (click)="emailLeverancier()" mat-raised-button color="primary">
+          <i class="material-icons">
+              assignment
+          </i>
+        Dien klacht in bij {{klacht.merknaam}}
+      </button> <br>   
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button (click)='bekijkKlacht()' mat-button>Bekijk klacht {{klacht.klachtennummer}}</button>
+    <button (click)='back()' mat-button>Terug</button>
+</mat-dialog-actions>
+

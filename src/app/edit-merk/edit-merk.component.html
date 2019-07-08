@@ -1,0 +1,17 @@
+<h1  mat-dialog-title>Wijzig merk</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input [(ngModel)]="merk.merknaam"  matInput placeholder="Merknaam">
+      </mat-form-field>
+      <mat-form-field>
+          <input [(ngModel)]="merk.email"  matInput placeholder="Email">
+        </mat-form-field>
+      <mat-radio-group required [(ngModel)]="merk.serienummerVerplicht" class="example-radio-group">
+        <mat-radio-button  selected  class="example-radio-button" value=true >Serienummer verplicht</mat-radio-button>
+        <mat-radio-button  class="example-radio-button" value=false >Serienummer niet verplicht</mat-radio-button>
+      </mat-radio-group>
+</div>
+<mat-dialog-actions>
+  <button (click)='save()' cdkFocusInitial mat-button>Opslaan</button>
+  <button (click)='back()' mat-button>Annuleren</button>
+</mat-dialog-actions>

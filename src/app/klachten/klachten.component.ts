@@ -8,6 +8,8 @@ import {map, startWith, filter} from 'rxjs/operators';
 import  * as moment from 'moment';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
+import { Router } from '@angular/router';
+import { KlachtVervolgComponent } from '../klacht-vervolg/klacht-vervolg.component';
 
 @Component({
   selector: 'app-klachten',
@@ -31,21 +33,28 @@ import { AddKlachtComponent } from '../add-klacht/add-klacht.component';
 })
 export class KlachtenComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { }
+  constructor(public router:Router ,public dialog: MatDialog, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) {
+    
+   }
   klachten$: any;
+  allKlachten: any;
   filter = "";
-  status = 1;
+  status = true;
   options: string[];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   context = this;
   klachtenArray: any[];
+  displayedColumns: string[] = 
+  ['status','Klachtennummer', 'Datum', 'Merknaam', 'Omschrijving', 'mailKlant', 'klachtIngediend', 'omgeruild' ,'menu'];
+
 
   ngOnInit() {
   
-    this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
+    this.MsSQLService.getKlachten().subscribe(
       data => {
-        this.klachten$ = data;
+        this.allKlachten = data;
+        this.klachten$ = this.allKlachten.filter(row => { return row.s == true})
       } 
     )
     this.MsSQLService.getMerken().subscribe(
@@ -68,28 +77,32 @@ export class KlachtenComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
+  /*  this.MsSQLService.getKlachtByFilter(value,this.status).subscribe(
       data => {
         this.klachten$ = data;
         let tempData:any = data;
         
         this.klachtenArray = tempData;
       } 
-    )
+    )*/
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  //Filter klachten functie
   filterKlachten(e:any){
+
     if(this.status != undefined){
-      this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
-        data => this.klachten$ = data
-      )
+      //All klachten
+      this.klachten$ = this.allKlachten.filter(row =>{
+         return row.merknaam.toLowerCase().includes(this.filter.toLowerCase()) && row.s == this.status
+      })
+
      }
      else
      {
-      this.MsSQLService.getKlachten().subscribe(
-        data => this.klachten$ = data
-      ) 
+      this.klachten$ = this.allKlachten.filter(row =>{
+        return row.merknaam.toLowerCase().includes(this.filter.toLowerCase())
+     })
      }
     
   }
@@ -112,15 +125,15 @@ export class KlachtenComponent implements OnInit {
     klacht.S = '1';
   }
 
-  changeOpgelost(event:Event, klacht){
-    event.preventDefault();
-    event.stopImmediatePropagation();
+  changeOpgelost(event:Event, klacht, menu){
+
+    this.preventEvent(event);
 
     let currentS = klacht.s
-    if(klacht.s == 1) klacht.s = 0
-    else klacht.s = 1
+    if(klacht.s == true) klacht.s = false
+    else klacht.s = true
 
-    if(!this.status) this.status = 1
+    if(!this.status) this.status = true
     else this.status = currentS
     this.MsSQLService.updateKlacht(klacht).subscribe(data => {
       this.MsSQLService.getKlachtByFilter(this.filter,this.status).subscribe(
@@ -135,14 +148,15 @@ export class KlachtenComponent implements OnInit {
   }
 
   deleteKlacht(event:Event, klacht){
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    this.preventEvent(event);
     if(confirm("Weet je zeker dat je de klacht wilt verwijderen?")){
       this.MsSQLService.deleteKlacht(klacht).subscribe(data => {
         var index = this.klachten$.map(x => {
           return x.klachtennummer;
         }).indexOf(klacht.klachtennummer);
+        console.log(index, this.klachten$);
         this.klachten$.splice(index, 1)
+        //API-call of optimistic-ui? 
         this.popup.open("Klacht " + klacht.klachtennummer + " is verwijderd", null, {duration:1500})
       })
     }
@@ -150,9 +164,36 @@ export class KlachtenComponent implements OnInit {
   }
 
   addKlachtDialog(){
-    const dialogRef = this.dialog.open(AddKlachtComponent);
+    const dialogRef = this.dialog.open(AddKlachtComponent, {
+      minWidth: '700px'
+    });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result){
+        this.klachten$.push(result)
+        const dialogVervolg = this.dialog.open(KlachtVervolgComponent,
+          {
+            data:{
+              klacht: result
+            }
+          })
+          dialogVervolg.afterClosed().subscribe(result => {
+            if(result) this.router.navigateByUrl('/details/'+result)
+          })
+      }
     });
   }
+
+  selectRow(row){
+      this.router.navigateByUrl('/details/'+row.klachtennummer)
+  }
+
+  openMenu(event:Event){
+    this.preventEvent(event);
+  }
+
+  preventEvent(event:Event){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
 }

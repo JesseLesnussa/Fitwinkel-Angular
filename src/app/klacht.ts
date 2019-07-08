@@ -8,9 +8,9 @@ export class Klacht {
     Klantadres?				:  string;
     Klantpostcode?			:  string;
     Woonplaats?				:  string;
-    Telefoonnummer? 		    :  string;
+    Telefoonnummer? 	 :  string;
     mobiel?					:  string;
-    Telefoon? 				:  string;
+    Telefoon? 				:  string;  
     vast?					:  string;
     Email?					:  string;
     Klachtenomschrijving?	:  string;
@@ -23,7 +23,7 @@ export class Klacht {
     DatumOpgelost?			:  string;
     DagenOpen?				:  number;
     AantalActies?			:  number;
-    WeeknummerBegin?		    :  number;
+    WeeknummerBegin?	    :  number;
     WeeknummerEind?			:  number;
     jaarBegin?				:  number;
     jaarEind?				:  number;
@@ -32,4 +32,5 @@ export class Klacht {
     klant?                  : Klant;
     MerkType?               : {Merknaam:String, SerienummerVerplicht: number};
     medewerkerId?           : number;
+    
 }

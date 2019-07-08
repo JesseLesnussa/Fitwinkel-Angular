@@ -1,0 +1,28 @@
+
+
+<div mat-dialog-content>
+    <h1 mat-dialog-title> Nieuwe actie</h1>
+    <mat-divider></mat-divider> <br>
+    <mat-form-field>
+        <mat-select [(ngModel)]="actie.klantnaam"    placeholder="Medewerker" required>
+            <mat-option *ngFor='let mw of medewerkers' [value]="mw.voornaam + ' ' + mw.achternaam"> {{mw.voornaam}} {{mw.achternaam}} </mat-option>
+          </mat-select>
+      
+      </mat-form-field>
+        <mat-form-field>
+            <input [(ngModel)]="actie.actie"  matInput placeholder="Omschrijving" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option  value="E-mail verstuurd naar klant">
+                  E-mail verstuurd naar klant
+              </mat-option>
+              <mat-option  value="Klacht ingediend bij {{merknaam}}">
+                  Klacht ingediend bij {{merknaam}}
+              </mat-option>
+              <mat-option  value="Product omgeruild">
+                  Product omgeruild
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> <br>
+          <button (click)="addActie()" mat-raised-button color="primary"> Toevoegen</button>
+  </div>
+

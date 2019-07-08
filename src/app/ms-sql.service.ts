@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Klacht } from './klacht';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +26,6 @@ export class MsSQLService {
   }
 
   getKlachten(){
-    
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/klachten/")
   }
 
@@ -50,7 +48,7 @@ export class MsSQLService {
   getActies(id){
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/acties/"+id)
   }
-
+  
   addActie(actie){
     return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/acties/", actie);
   }
@@ -96,17 +94,25 @@ export class MsSQLService {
     return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/", klacht);
   }
 
+  updateChecklist(klacht){
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/updateChecklist", klacht);
+  }
+
   updateKlacht(klacht){   
     return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/update", klacht);
   }
 
 
   getKlanten(){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+  //  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatieslocal") 
+    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest") 
+
   }
   getKlant(id){
-    return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
-  }
+  //return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relaties/"+id) 
+  return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/relatiesTest/"+id) 
+  
+}
 
   deleteKlant(klant){
     return this.HttpClient.delete("https://fitwinkel.azurewebsites.net/api/relaties/" + klant.id) 
@@ -128,4 +134,12 @@ export class MsSQLService {
     return this.HttpClient.get("https://fitwinkel.azurewebsites.net/api/medewerkers/"+id)
   }
 
+  updateKlachtGegevens(klacht){
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/klachten/updateKlachtgegevens", klacht);   
+  }
+
+  updateMerk(merk){
+    return this.HttpClient.post("https://fitwinkel.azurewebsites.net/api/merken/update", merk);
+  }
 }
+

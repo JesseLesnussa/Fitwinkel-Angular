@@ -7,7 +7,7 @@
       <mat-card-subtitle>
         Overzicht van opgeloste en openstaande klachten 
       </mat-card-subtitle>
-      
+       
           <mat-form-field>
             <input [(ngModel)]="filter" (input)="filterKlachten($event)" type="text" placeholder="Filter op merk" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
             <mat-autocomplete  (optionSelected)="filterKlachten($event)" autoActiveFirstOption #auto="matAutocomplete">
@@ -21,16 +21,16 @@
               <mat-option [value]=null >
                 --
               </mat-option>
-              <mat-option [value]="1">
-                Open
+              <mat-option [value]=true>
+                Openstaand
               </mat-option>
-              <mat-option [value]="0">
-                Opgelost
+              <mat-option [value]=false>
+                Afgerond
               </mat-option>
             </mat-select>
             <br>
           </mat-form-field>
-          <button cdkFocusInitial mat-button *ngIf='klachten$' (click)='addKlachtDialog()'>
+          <button color="primary"  cdkFocusInitial mat-raised-button *ngIf='klachten$' (click)='addKlachtDialog()'>
             Nieuwe klacht toevoegen
             <!-- 
               Open modal => Klacht toevoegen met nieuwe design.
@@ -39,6 +39,113 @@
           </button>
 
           <mat-divider></mat-divider> <br><br>
+
+          
+    <mat-table [dataSource]="klachten$" class="mat-elevation-z8">
+
+
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let element "> 
+              <mat-icon  *ngIf='element.s; else close' color="warn" mat-list-icon>close</mat-icon>
+              <ng-template #close> 
+                  <mat-icon color="primary" mat-list-icon>check</mat-icon> 
+              </ng-template>
+            </mat-cell>
+          </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Klachtennummer">
+          <mat-header-cell *matHeaderCellDef> Klachtennummer </mat-header-cell>
+          <mat-cell *matCellDef="let element "> {{element.klachtennummer}} </mat-cell>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Datum">
+          <mat-header-cell *matHeaderCellDef> Datum </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.datumbegin | date}} </mat-cell>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Merknaam">
+          <mat-header-cell *matHeaderCellDef> Merknaam </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.merknaam}} </mat-cell>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Omschrijving">
+          <mat-header-cell *matHeaderCellDef> Omschrijving </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+            
+            <span class='leegOmschrijving' *ngIf='!element.klachtenomschrijving'>(leeg)</span>
+            {{element.klachtenomschrijving}}
+            
+          </mat-cell>
+        </ng-container>
+
+ 
+        <ng-container matColumnDef="mailKlant">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+              <button [disabled]="!element.mailKlant" mat-mini-fab 
+              matTooltip="Klant is op de hoogte gesteld!" matTooltipPosition="above" >
+                  <mat-icon>email</mat-icon>
+                </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="klachtIngediend">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+                <button mat-mini-fab [disabled]="!element.klachtIngediend"
+                matTooltip="Klacht is ingediend bij de leverancier!" matTooltipPosition="above" >
+                    <mat-icon>assignment</mat-icon>
+                  </button>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="omgeruild">
+              <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+              <mat-cell *matCellDef="let element"> 
+                  <button mat-mini-fab [disabled]="!element.omgeruild"
+                  matTooltip="Product is omgeruild!" matTooltipPosition="above" >
+                      <mat-icon>swap_horiz</mat-icon>
+                    </button>
+              </mat-cell>
+            </ng-container>
+    
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="menu">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+            
+                <button (click)='openMenu($event)' mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button (click)='changeOpgelost($event, element, $this)' mat-menu-item>
+                      <mat-icon>autorenew</mat-icon>
+                    Wijzig status
+                    </button>
+                    <button (click)='deleteKlacht($event, element)' mat-menu-item>
+                      <mat-icon >delete</mat-icon>
+                      Verwijder klacht
+                    </button>
+                  </mat-menu>
+            
+            </mat-cell>
+          </ng-container>
+              
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row matTooltip="Bekijk klacht" matTooltipPosition="left"  *matRowDef="let row; columns: displayedColumns;"
+         (click)="selectRow(row)"
+         ></mat-row>
+      </mat-table>
+      
+<!--
           <mat-nav-list >
               <mat-spinner *ngIf='!klachten$'></mat-spinner>
               <div *ngIf='klachten$'>
@@ -49,10 +156,7 @@
 
               <a  matTooltip="Bekijk klacht" matTooltipPosition="left"
                   mat-list-item *ngFor='let klacht of klachten$' routerLink="details/{{klacht.klachtennummer}}">
-                  <mat-icon  *ngIf='klacht.s; else close' color="warn" mat-list-icon>close</mat-icon>
-                  <ng-template #close> 
-                      <mat-icon color="primary" mat-list-icon>check</mat-icon> 
-                  </ng-template>
+                 
                 <h4 mat-line> <b>{{klacht.klachtennummer}}</b>  </h4>
                 <p mat-line>
                   {{klacht.merknaam}} <span *ngIf='klacht.klachtenomschrijving'> - {{klacht.klachtenomschrijving}}</span> <br> 
@@ -66,6 +170,7 @@
                   </button>
               </a>
             </mat-nav-list>
-            
+        -->    
     </mat-card>
+
   </div>

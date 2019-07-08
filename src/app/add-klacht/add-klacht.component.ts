@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MsSQLService } from '../ms-sql.service';
-import {MatSnackBar, MatDialog} from '@angular/material';
+import {MatSnackBar, MatDialog, MatDialogRef} from '@angular/material';
 import { Klacht } from '../klacht';
 import { Klant } from '../klant';
 import { Router } from "@angular/router";
@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import {map, startWith, concat} from 'rxjs/operators';
 import * as moment from 'moment'
 import { Actie } from '../actie';
+import { KlachtenComponent } from '../klachten/klachten.component';
 
 
 @Component({
@@ -62,10 +63,13 @@ export class AddKlachtComponent implements OnInit {
   filteredMerk: Observable<string[]>;
   filteredMedewerker: Observable<string[]>;
   filteredKlant: Observable<string[]>;
-
-  constructor(private router:Router, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { 
+  loadingMerken:boolean = true;
+  loadingKlanten:boolean = true;
+  isSaving:boolean = false;
+  constructor(  public dialogRef: MatDialogRef<KlachtenComponent>, private router:Router, private MsSQLService:MsSQLService, private http:HttpClient, private popup:MatSnackBar) { 
     this.MsSQLService.getKlanten().subscribe(
       data => {
+        this.loadingKlanten = false;
         this.klanten$ = data
         var namen:string[] = [];
         var tempData:any = data;
@@ -82,6 +86,7 @@ export class AddKlachtComponent implements OnInit {
       ); 
     this.MsSQLService.getMerken().subscribe(
       data => {
+        this.loadingMerken = false;
         this.merken = data
         var namen:string[] = [];
         var tempData:any = data;
@@ -113,8 +118,6 @@ export class AddKlachtComponent implements OnInit {
         );
        }
     )
-
-
   }
  
 
@@ -130,9 +133,7 @@ export class AddKlachtComponent implements OnInit {
     this.filteredMerk = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterMerk(value))
-    );
-
-    
+    );   
   }
 
   private _filterKlant(value: string): string[] {
@@ -152,7 +153,13 @@ export class AddKlachtComponent implements OnInit {
   }
 
   addKlacht(){
-   if(!moment.isDate(this.klacht.aankoopdatum)) {
+    if(this.klacht.MerkType.serienummerVerplicht && !this.klacht.serienummer && this.klacht.serienummer.trim().length < 1){
+      this.popup.open("Vul een serienummer in!" ,null,  {
+        duration: 1500,
+      })  
+    }
+
+   else if(!moment.isDate(this.klacht.aankoopdatum)) {
     this.popup.open("Controleer het formaat van de aankoopdatum!" ,null,  {
       duration: 1500,
     })  
@@ -176,34 +183,37 @@ export class AddKlachtComponent implements OnInit {
       })  
     }
     else{
-      this.popup.open("Klacht wordt toegevoegd..." ,null)  
-      this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
-          {
-            let newKlacht:any = data;
-            let actie:Actie = {
-              "klantnaam": "",
-              "datum": moment(new Date()).format("YYYY-MM-DD"),
-              "klachtennummer": newKlacht.klachtennummer,
-              "id": 0,
-              "merk": "",
-              "actie": "Klacht aangemaakt"  
-            }
-            
-            this.MsSQLService.getKlant(newKlacht.klantId).subscribe(klant => {
-              let sb = this.popup.open("Klacht is toegevoegd!" , "Verstuur bevestiging garantie-aanvraag", {duration:30000});
-              sb.onAction().subscribe(()=> this.emailKlant(data,klant));
-              this.MsSQLService.addActie(actie).subscribe(acties => {
-              })
-              setTimeout(()=> this.router.navigate(['/']) , 1000)
+      this.isSaving = true;
+      this.popup.open("Klacht wordt toegevoegd..." ,null,{
+        duration: 1500,
+      })  
+ 
+          this.MsSQLService.addKlacht(this.klacht).subscribe(data => 
+            {
+              let newKlacht:any = data;
+              let actie:Actie = {
+                "klantnaam": "",
+                "datum": moment(new Date()).format("YYYY-MM-DD"),
+                "klachtennummer": newKlacht.klachtennummer,
+                "id": 0, 
+                "merk": "",
+                "actie": "Klacht aangemaakt"  
+              }
+  
+              this.klacht.klachtennummer = newKlacht.klachtennummer;
+              this.klacht.merknaam = this.klacht.MerkType.merknaam;
               
-            })
-            
-
-          }
-      ); 
-
-     
+                this.MsSQLService.addActie(actie).subscribe(acties => {
+                })
+                this.isSaving = false;
+                this.dialogRef.close(this.klacht);                         
+        
+                
+            }
+        ); 
+    
     }
+    
   }
 
   emailKlant(klacht, klant){
@@ -211,5 +221,9 @@ export class AddKlachtComponent implements OnInit {
     "&body=Geachte heer/mevrouw " + klant.achternaam + ", %0D%0A%0D%0AWij hebben uw garantie-aanvraag ontvangen en geregistreerd onder meldingsnummer " + klacht.klachtennummer + ".%0D%0A%0D%0ADe leverancier zal zo spoedig mogelijk, meestal tussen de 5 en 10 werkdagen, contact met u opnemen om een%0D%0Aafspraak te maken over de oplossing van de klacht.%0D%0A%0D%0AAarzel niet om contact met ons op te nemen, wanneer u nog niks heeft gehoord van de leverancier terwijl u dat al wel had verwacht, of als u nog vragen heeft.%0D%0A%0D%0A";
   }
 
+  sluiten()
+  {
+    this.dialogRef.close();
+  }
 
 }
