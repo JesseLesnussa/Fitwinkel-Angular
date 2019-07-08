@@ -229,3 +229,51 @@
           </mat-card-actions>
       </mat-card >
 </div>
+
+<script>
+    let nChecked = 0;
+    let deleteButton = document.getElementById('deleteMulitpleButton');
+    let listLossCheckButtons = document.getElementsByClassName('isLossed');
+    let filterBox =  document.getElementById("selectAllLosses");
+
+    document.getElementById("lossesForm").addEventListener("submit", handleMultipleLosses);
+
+    function handleMultipleLosses(event){
+       for(let i = 0 ; i<listLossCheckButtons.length;i++){
+          if(listLossCheckButtons[i].checked == true) nChecked ++;
+        }
+
+       if(getCheckedCount() == 0){
+          alert("Er zijn geen verliezen geselecteerd!");
+          event.preventDefault();
+        }
+        else{
+           isConfirmed = confirm("Weet u zeker dat u de geselecteerde verliezen wilt verwijderen? \nDe volgende verliezen zijn geselecteerd:\n"+ getCheckedIds())
+           if(!isConfirmed) event.preventDefault()
+        }
+     }
+
+    function getCheckedCount(){
+      let nCount = 0;
+       for(let i = 0 ; i<listLossCheckButtons.length;i++){
+          if(listLossCheckButtons[i].checked == true) nCount ++;
+        }
+      return nCount;
+    }
+
+    function getCheckedIds(){
+    checkedIds = [];
+       for(let i = 0 ; i<listLossCheckButtons.length;i++){
+          if(listLossCheckButtons[i].checked == true) checkedIds.push(listLossCheckButtons[i].name)
+        }
+      return checkedIds;
+    }
+
+
+    filterBox.addEventListener("click", function(event) {
+        boxes = listLossCheckButtons;
+        for(let i = 0 ; i<boxes.length;i++){
+            boxes[i].checked =  filterBox.checked;
+        }
+    })
+</script>
